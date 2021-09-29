@@ -18,7 +18,7 @@ def plot_spectrogram_scipy(
 ) -> None:
     # Compute spectrogram:
     w = sp_signal.get_window("hann", sample_rate)
-    f, t, psd = sp_signal.spectrogram(
+    _, _, psd = sp_signal.spectrogram(
         signal,
         sample_rate,
         nperseg=sample_rate,

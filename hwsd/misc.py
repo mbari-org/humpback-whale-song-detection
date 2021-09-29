@@ -12,10 +12,9 @@ def elapsed_end(started: float) -> str:
     hours, minutes = divmod(minutes, 60)
     if hours > 0:
         return f"{hours:02}h:{minutes:02}m:{seconds:02}s"
-    elif minutes > 0:
+    if minutes > 0:
         return f"{minutes:02}m:{seconds:02}s"
-    else:
-        return f"{secs:.1f}s"
+    return f"{secs:.1f}s"
 
 
 def parse_days(*args: str) -> List[Tuple[int, int, int]]:
@@ -31,8 +30,7 @@ def parse_days(*args: str) -> List[Tuple[int, int, int]]:
             start, end = frags
             nominal = list(range(start, end + 1))
             return [x for x in nominal if x in limits]
-        else:
-            return frags
+        return frags
 
     res: List[Tuple[int, int, int]] = []
 

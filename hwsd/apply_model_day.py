@@ -35,7 +35,7 @@ def apply_model_day(
     if fh.sample_rate != 10_000:
         # A previous version handled this case by doing the resampling (using librosa).
         # but later on we opted to generate the 10kHz files beforehand (using sox).
-        print(f"ERROR: Input signal expected at 10kHz")
+        print("ERROR: Input signal expected at 10kHz")
         return
 
     program_started = time.time()
@@ -48,7 +48,7 @@ def apply_model_day(
         mh.load_model()
         print(f"    >> model loaded in {elapsed_end(model_load_started)}")
 
-    print(f"\n==> Selecting day")
+    print("\n==> Selecting day")
     if not fh.select_day(year, month, day):
         return
 
@@ -72,7 +72,7 @@ def apply_model_day(
     # initial offset to update day_scores below:
     day_scores_offset_seconds = at_hour * 60 * 60
 
-    print(f"\n==> Starting model application ...")
+    print("\n==> Starting model application ...")
     model_application_started = time.time()
     to_model_in_seconds = 60 * model_minutes
     to_model_in_samples = 10_000 * to_model_in_seconds
@@ -117,7 +117,7 @@ def apply_model_day(
 
 def parse_arguments():
     description = "Applies Google Humpback Whale Model on a Pacific Sound day file."
-    example = f"""
+    example = """
 Examples:
     hwsd/apply_model_day.py --year=2016 --month=12 --day=21
        will process a complete day.
@@ -145,31 +145,30 @@ Examples:
         help=f"Score base directory. By default, {DEFAULT_SCORE_BASE_DIR}.",
     )
 
-    parser.add_argument("--year", type=int, metavar="YYYY", required=True, help=f"Year")
-    parser.add_argument("--month", type=int, metavar="M", required=True, help=f"Month")
-    parser.add_argument("--day", type=int, metavar="D", required=True, help=f"Day")
+    parser.add_argument("--year", type=int, metavar="YYYY", required=True, help="Year")
+    parser.add_argument("--month", type=int, metavar="M", required=True, help="Month")
+    parser.add_argument("--day", type=int, metavar="D", required=True, help="Day")
     parser.add_argument(
         "--at-hour",
         type=int,
         metavar="H",
         default=0,
-        help=f"Hour at which to start applying the model. " f"By default, 0.",
+        help="Hour at which to start applying the model. By default, 0.",
     )
     parser.add_argument(
         "--hours",
         type=int,
         metavar="h",
         default=24,
-        help=f"Number of hours to process. "
-        f"By default, the remaining hours for the day per `at-hour`.",
+        help="Number of hours to process. "
+        "By default, the remaining hours for the day per `at-hour`.",
     )
     parser.add_argument(
         "--model-minutes",
         type=int,
         metavar="m",
         default=10,
-        help=f"Length in minutes of signal to give the model at a time. "
-        f"By default, 10.",
+        help="Length in minutes of signal to give the model at a time. By default, 10.",
     )
 
     return parser.parse_args()

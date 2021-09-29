@@ -34,7 +34,7 @@ def plot_results(
     gs = gridspec.GridSpec(2, 1, height_ratios=[1, 1])
 
     # Plot spectrogram:
-    print(f"    plotting spectrogram")
+    print("    plotting spectrogram")
     plt.subplot(gs[0])
     plot_spectrogram_scipy(
         signal,
@@ -45,7 +45,7 @@ def plot_results(
     )
 
     # Plot scores:
-    print(f"    plotting scores")
+    print("    plotting scores")
     fig.add_subplot(gs[1])
     plot_scores(
         scores,
@@ -75,11 +75,11 @@ def plot_segment(
     minutes: int = 0,
     show_plot: bool = False,
 ):
-    print(f"\n==> Selecting day")
+    print("\n==> Selecting day")
     if not fh.select_day(year, month, day):
         return
 
-    print(f"\n==> Loading audio segment")
+    print("\n==> Loading audio segment")
     psound_segment, psound_segment_seconds = fh.load_audio_segment(
         at_hour=at_hour, at_minute=at_minute, hours=hours, minutes=minutes
     )
@@ -122,7 +122,7 @@ def plot_segment(
 
 def parse_arguments():
     description = "Plots Google Humpback Whale Model Scores."
-    example = f"""
+    example = """
 The base directory to read in audio files is by default {DEFAULT_AUDIO_BASE_DIR}.
 The base directory for the generated score files is by default {DEFAULT_SCORE_BASE_DIR}.
 
@@ -148,39 +148,39 @@ Examples:
         help=f"Score base directory. By default, {DEFAULT_SCORE_BASE_DIR}.",
     )
 
-    parser.add_argument("--year", type=int, metavar="YYYY", required=True, help=f"Year")
-    parser.add_argument("--month", type=int, metavar="M", required=True, help=f"Month")
-    parser.add_argument("--day", type=int, metavar="D", required=True, help=f"Day")
+    parser.add_argument("--year", type=int, metavar="YYYY", required=True, help="Year")
+    parser.add_argument("--month", type=int, metavar="M", required=True, help="Month")
+    parser.add_argument("--day", type=int, metavar="D", required=True, help="Day")
     parser.add_argument(
         "--at-hour",
         type=int,
         metavar="H",
         default=0,
-        help=f"Start hour for the plot. By default, 0.",
+        help="Start hour for the plot. By default, 0.",
     )
     parser.add_argument(
         "--at-minute",
         type=int,
         metavar="m",
         default=0,
-        help=f"Start minute for the plot. By default, 0.",
+        help="Start minute for the plot. By default, 0.",
     )
     parser.add_argument(
         "--hours",
         type=int,
         metavar="h",
         default=24,
-        help=f"Number of hours to plot. By default, 24",
+        help="Number of hours to plot. By default, 24",
     )
     parser.add_argument(
         "--minutes",
         type=int,
         metavar="h",
         default=0,
-        help=f"Additional number of minutes to plot. By default, 0",
+        help="Additional number of minutes to plot. By default, 0",
     )
     parser.add_argument(
-        "--show-plot", action="store_true", default=False, help=f"Also show the plot."
+        "--show-plot", action="store_true", default=False, help="Also show the plot."
     )
 
     return parser.parse_args()
