@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import gridspec
 
-from file_helper import FileHelper, DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR
-from plotting import plot_spectrogram_scipy, plot_scores
+from hwsd.file_helper import FileHelper, DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR
+from hwsd.plotting import plot_spectrogram_scipy, plot_scores
 
 
 def plot_results(
@@ -127,7 +127,7 @@ The base directory to read in audio files is by default {DEFAULT_AUDIO_BASE_DIR}
 The base directory for the generated score files is by default {DEFAULT_SCORE_BASE_DIR}.
 
 Examples:
-    ./plot_scores_day.py --year=2016 --month=11 --day=1 --at-hour=0 --at-minute=25 --hours=0 --minutes=30
+    hwsd/plot_scores_day.py --year=2016 --month=11 --day=1 --at-hour=0 --at-minute=25 --hours=0 --minutes=30
     """
 
     parser = ArgumentParser(

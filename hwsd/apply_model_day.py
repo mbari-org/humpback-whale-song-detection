@@ -6,9 +6,9 @@ from typing import Union
 
 import numpy as np
 
-from file_helper import FileHelper, DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR
-from misc import elapsed_end
-from model_helper import ModelHelper
+from hwsd.file_helper import FileHelper, DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR
+from hwsd.misc import elapsed_end
+from hwsd.model_helper import ModelHelper
 
 
 def get_chunk_label(tot_minutes: int) -> str:
@@ -119,10 +119,10 @@ def parse_arguments():
     description = "Applies Google Humpback Whale Model on a Pacific Sound day file."
     example = f"""
 Examples:
-    ./apply_model_day.py --year=2016 --month=12 --day=21
+    hwsd/apply_model_day.py --year=2016 --month=12 --day=21
        will process a complete day.
                          
-    ./apply_model_day.py --year=2016 --month=12 --day=21 --at_hour=10 --hours=4
+    hwsd/apply_model_day.py --year=2016 --month=12 --day=21 --at_hour=10 --hours=4
        will only process the indicated segment within a day.    
     """
 

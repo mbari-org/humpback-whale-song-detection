@@ -1,7 +1,7 @@
 import time
 import unittest
 
-from misc import elapsed_end, parse_days
+from hwsd.misc import elapsed_end, parse_days
 
 
 class Test(unittest.TestCase):

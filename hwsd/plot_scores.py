@@ -5,11 +5,11 @@
 
 from calendar import monthrange
 
-import file_helper
-from plot_scores_day import plot_segment
+from hwsd.file_helper import FileHelper
+from hwsd.plot_scores_day import plot_segment
 
 # Using defaults on gizo:
-fh = file_helper.FileHelper()
+fh = FileHelper()
 
 # adjust as needed:
 years_months = [

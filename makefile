@@ -8,7 +8,7 @@ install:
 
 # Do static type checking
 check:
-	python -m mypy . --ignore-missing-imports
+	python -m mypy hwsd --ignore-missing-imports
 
 # Install std types for mypy
 install-types:
@@ -20,4 +20,4 @@ test:
 
 # Format source code
 format:
-	python -m black .
+	python -m black hwsd

@@ -65,31 +65,31 @@ process for each day in a given month. Example:
 ## Applying the model
 
 Edit `apply_model.py` as needed to indicate the years, months, and days to process.
-Basically, you just need to run `./apply_model.py`, but, depending on how you launch
+Basically, you just need to run `hwsd/apply_model.py`, but, depending on how you launch
 the script or the amount of work to be dispatched here's a convenient way:
 
-    nohup python -u ./apply_model.py &
+    nohup python -u hwsd/apply_model.py &
 
-Note that `./apply_model.py` is a convenience to run the actual core function
+Note that `hwsd/apply_model.py` is a convenience to run the actual core function
 `apply_model_day` on multiple days.
-For a particular day you can also run `apply_model_day.py` directly.
+For a particular day you can also run `hwsd/apply_model_day.py` directly.
 
-    ./apply_model_day.py --help
+    hwsd/apply_model_day.py --help
 
 ## Generating the plots
 
-Edit `plot_scores.py` as needed to indicate the years, months, and days to process.
+Edit `hwsd/plot_scores.py` as needed to indicate the years, months, and days to process.
 Then, run it:
 
-    ./plot_scores.py
+    hwsd/plot_scores.py
 
 Each generated plot file will be located next to the corresponding score file.
 
-Note that `./plot_scores.py` is a convenience to run the actual core function
+Note that `hwsd/plot_scores.py` is a convenience to run the actual core function
 `plot_scores_day` on multiple days. 
-For a particular day you can also run `plot_scores_day.py` directly.
+For a particular day you can also run `hwsd/plot_scores_day.py` directly.
 
-    ./plot_scores_day.py --help
+    hwsd/plot_scores_day.py --help
 
 ---
 
