@@ -1,0 +1,12 @@
+[FORMAT]
+
+# Maximum number of characters on a single line.
+max-line-length=120
+
+# Allow 1- or 2-char variable names
+good-names-rgxs=^([_a-z][_a-z0-9]?)|P|Q|W|D$
+
+[DESIGN]
+
+# Maximum number of arguments for function / method.
+max-args=7

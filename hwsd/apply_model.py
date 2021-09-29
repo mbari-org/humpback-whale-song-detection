@@ -6,11 +6,12 @@
 #      $ nohup python3 -u hwsd/apply_model.py &
 #      $ tail -f nohup.out
 
-from hwsd import file_helper
 import time
+
+from hwsd import file_helper
+from hwsd.apply_model_day import apply_model_day
 from hwsd.misc import elapsed_end, parse_days
 from hwsd.model_helper import ModelHelper
-from hwsd.apply_model_day import apply_model_day
 
 # Adjust as needed (the intervals are adjusted by parse_days):
 intervals = ["2018/11-12/1-31", "2019/1-12/1-31", "2020/1-10/1-31"]

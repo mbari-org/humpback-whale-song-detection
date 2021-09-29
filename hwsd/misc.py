@@ -1,8 +1,7 @@
 import math
 import time
-
-from typing import Tuple, List
 from calendar import monthrange
+from typing import Tuple, List
 
 
 def elapsed_end(started: float) -> str:

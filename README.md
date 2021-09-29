@@ -95,6 +95,17 @@ For a particular day you can also run `hwsd/plot_scores_day.py` directly.
 
 ## Development
 
-    make check
-    make test
-    make format
+With the setup in place, run the following on a regular basis
+as you work with the code:
+
+    make
+
+The default task in the makefile does type checking, testing and code formatting.
+
+**NOTE**: Before committing/pushing any changes, be sure to also run:
+
+    make pylint
+
+and address any issues, or check with the team about any known pylint complaints.
+
+See [`makefile`](makefile) for all available tasks.

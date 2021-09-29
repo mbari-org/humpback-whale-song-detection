@@ -7,3 +7,6 @@ tensorflow_hub
 mypy
 black
 pytest
+usort
+ufmt
+pylint

@@ -1,14 +1,18 @@
-# Type check and test
+# A convenient default for development: type check, test, and format
 default:
-	make check test
+	make check test format
+
+# As default plus pylint; good to run before committing
+all:
+	make check test format pylint
 
 # Install dependencies
-install:
+setup:
 	pip install -r requirements.txt
 
-# Do static type checking
+# Do static type checking (not very strict)
 check:
-	python -m mypy hwsd --ignore-missing-imports
+	python -m mypy hwsd
 
 # Install std types for mypy
 install-types:
@@ -20,4 +24,12 @@ test:
 
 # Format source code
 format:
-	python -m black hwsd
+	python -m ufmt format hwsd
+
+# Run pylint
+pylint:
+	python -m pylint hwsd
+
+# Show latest few tags
+tags:
+	git tag -l | sort -V | tail
