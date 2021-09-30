@@ -76,3 +76,17 @@ class Test(unittest.TestCase):
                 (2020, 2, 29),
             ],
         )
+
+        # omitting day range
+        self.assertEqual(
+            parse_days("2021/12"),
+            [(2021, 12, d) for d in range(1, 31 + 1)],
+        )
+        self.assertEqual(
+            parse_days("2020/2"),
+            [(2020, 2, d) for d in range(1, 29 + 1)],
+        )
+        self.assertEqual(
+            parse_days("2021/2"),
+            [(2021, 2, d) for d in range(1, 28 + 1)],
+        )

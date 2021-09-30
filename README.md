@@ -87,19 +87,23 @@ Example: To apply the model on the six full months Oct–Dec'2020 and Jan–Mar'
 
     hwsd/apply_model.py "2020/10-12" "2021/1-3"
 
-Some of our runs on gizo were like the following
-(two concurrent jobs to process Jan–Aug'2021):
+Some of our runs on gizo were like the following:
 
     source virtenv/bin/activate
     export PYTHONPATH=.
+
+Two concurrent jobs to process Jan–Aug'2021:
+
     nohup python3 -u hwsd/apply_model.py "2021/1-4" > nohup-2021--1-4.out &
     nohup python3 -u hwsd/apply_model.py "2021/5-8" > nohup-2021--5-8.out &
 
-    nohup python3 -u hwsd/apply_model.py "2018/1-2/1-31" > nohup-2021--1-2.out &
-    nohup python3 -u hwsd/apply_model.py "2018/3-4/1-31" > nohup-2021--3-4.out &
-    nohup python3 -u hwsd/apply_model.py "2018/5-6/1-31" > nohup-2021--5-6.out &
-    nohup python3 -u hwsd/apply_model.py "2018/7-8/1-31" > nohup-2021--7-8.out &
-    nohup python3 -u hwsd/apply_model.py "2018/9-10/1-31" > nohup-2021--9-10.out &
+Five concurrent jobs to process Jan–Oct'2018:
+
+    nohup python3 -u hwsd/apply_model.py "2018/1-2" > nohup-2018--1-2.out &
+    nohup python3 -u hwsd/apply_model.py "2018/3-4" > nohup-2018--3-4.out &
+    nohup python3 -u hwsd/apply_model.py "2018/5-6" > nohup-2018--5-6.out &
+    nohup python3 -u hwsd/apply_model.py "2018/7-8" > nohup-2018--7-8.out &
+    nohup python3 -u hwsd/apply_model.py "2018/9-10" > nohup-2018--9-10.out &
 
 Note that `hwsd/apply_model.py` is a convenience to run the actual core function
 `apply_model_day` on multiple days.
