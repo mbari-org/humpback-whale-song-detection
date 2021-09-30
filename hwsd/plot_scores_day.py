@@ -136,7 +136,7 @@ def parse_arguments():
     """CLI definition."""
 
     description = "Plots Google Humpback Whale Model Scores."
-    example = """
+    example = f"""
 The base directory to read in audio files is by default {DEFAULT_AUDIO_BASE_DIR}.
 The base directory for the generated score files is by default {DEFAULT_SCORE_BASE_DIR}.
 
