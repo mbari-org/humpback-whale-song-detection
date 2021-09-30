@@ -64,8 +64,9 @@ We do the necessary resampling beforehand using [`sox`](http://sox.sourceforge.n
         ./resample_sox.sh 2018 11
 
 - `resample_year_months.sh`:
-  Runs `resample_sox.sh` in sequence for all given months in a given year.
-  Example:
+  A convenient script that runs `resample_sox.sh` in sequence for all
+  given months in a given year.
+  For example, to resample Jan–Oct'2018:
 
         ./resample_year_months.sh 2018 $(seq 1 10)
 
@@ -80,30 +81,36 @@ Usage:
 
 where each time interval must be of the form
 `yearRange/monthRange/dayRange` or `yearRange/monthRange`,
-with each `xxRange` either a single number or a hyphen-separated range with inclusive limits.
-If omitted, the day range will be "1-31".
+with each range fragment either a single number or a hyphen-separated
+range with inclusive limits. If omitted, the day range will be "1-31".
+The code takes care of adjusting the day range depending on the calendar month.
 
-Example: To apply the model on the six full months Oct–Dec'2020 and Jan–Mar'2021:
+Example: To apply the model on the six months Oct–Dec'2020 and Jan–Mar'2021:
 
     hwsd/apply_model.py "2020/10-12" "2021/1-3"
 
-Some of our runs on gizo were like the following:
+Some of our runs on gizo have been like the following:
 
     source virtenv/bin/activate
     export PYTHONPATH=.
+    mkdir -p logs
 
 Two concurrent jobs to process Jan–Aug'2021:
 
-    nohup python3 -u hwsd/apply_model.py "2021/1-4" > nohup-2021--1-4.out &
-    nohup python3 -u hwsd/apply_model.py "2021/5-8" > nohup-2021--5-8.out &
+    nohup python3 -u hwsd/apply_model.py "2021/1-4" > logs/nohup-2021--1-4.out &
+    nohup python3 -u hwsd/apply_model.py "2021/5-8" > logs/nohup-2021--5-8.out &
 
 Five concurrent jobs to process Jan–Oct'2018:
 
-    nohup python3 -u hwsd/apply_model.py "2018/1-2" > nohup-2018--1-2.out &
-    nohup python3 -u hwsd/apply_model.py "2018/3-4" > nohup-2018--3-4.out &
-    nohup python3 -u hwsd/apply_model.py "2018/5-6" > nohup-2018--5-6.out &
-    nohup python3 -u hwsd/apply_model.py "2018/7-8" > nohup-2018--7-8.out &
-    nohup python3 -u hwsd/apply_model.py "2018/9-10" > nohup-2018--9-10.out &
+    for mr in 1-2 3-4 5-6 7-8 9-10; do
+        nohup python3 -u hwsd/apply_model.py "2018/$mr" > "logs/nohup-2018--$mr.out" &
+    done
+
+Six concurrent jobs to process 2017:
+
+    for mr in 1-2 3-4 5-6 7-8 9-10 11-12; do
+        nohup python3 -u hwsd/apply_model.py "2017/$mr" > "logs/nohup-2017--$mr.out" &
+    done
 
 Note that `hwsd/apply_model.py` is a convenience to run the actual core function
 `apply_model_day` on multiple days.
@@ -114,7 +121,7 @@ Run the following for usage:
 
 ## Generating plots
 
-This repo also includes code to generte plots with spectrograms and scores,
+This repo also includes code to generate plots with spectrograms and scores,
 which mainly helped with initial validations.
 
 In this case, no command line arguments are expected.
@@ -150,6 +157,3 @@ The default task in the makefile does type checking, testing and code formatting
 and address any issues, or check with the team about any known pylint complaints.
 
 See [`makefile`](makefile) for all available tasks.
-
-> You can also run [`just`](https://github.com/casey/just) if available on the system.
-> For example, run `just list` for a nice summary of the available "recipes."

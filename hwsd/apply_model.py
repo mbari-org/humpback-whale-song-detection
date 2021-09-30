@@ -21,22 +21,9 @@ MODEL_MINUTES = 60  # Size of audio to pass to the model.
 
 USAGE = """
 hwsd/apply_model.py: A main script to apply the model on given time intervals.
-
 Usage:
     $ hwsd/apply_model.py time-interval ...
-  where each time interval must be of the form 'yearRange/monthRange/dayRange' or 'yearRange/monthRange',
-  with each __Range either a single number or a hyphen-separated range with inclusive limits.
-  If omitted, the day range will be "1-31".
-
-Examples:
-    $ hwsd/apply_model.py "2020/10-12" "2021/1-3"
-    $ hwsd/apply_model.py "2021/9/1-21"
-
-Some of our runs on gizo were like this (two concurrent jobs to process Jan–Aug'2021):
-    $ source virtenv/bin/activate
-    $ export PYTHONPATH=.
-    $ nohup python3 -u hwsd/apply_model.py "2021/1-4" > nohup-2021--1-4.out &
-    $ nohup python3 -u hwsd/apply_model.py "2021/5-8" > nohup-2021--5-8.out &
+See README.md for more details.
 """
 
 
