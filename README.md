@@ -70,14 +70,15 @@ Usage:
 
     hwsd/apply_model.py time-interval ...
 
-where each time interval must be of the form `yearRange/monthRange_/dayRange`,
-with each `_Range` either a single number or a hyphen-separated range with inclusive limits.
+where each time interval must be of the form `yearRange/monthRange/dayRange`,
+with each `xxRange` either a single number or a hyphen-separated range with inclusive limits.
 
-Example: Apply the model on the six full months Oct–Dec'2020 and Jan–Mar'2021:
+Example: To apply the model on the six full months Oct–Dec'2020 and Jan–Mar'2021:
 
     hwsd/apply_model.py "2020/10-12/1-31" "2021/1-3/1-31"
 
-Some of our runs on gizo were like this (two concurrent jobs to process Jan–Aug'2021):
+Some of our runs on gizo were like the following
+(two concurrent jobs to process Jan–Aug'2021):
 
     source virtenv/bin/activate
     nohup python3 -u hwsd/apply_model.py "2021/1-4/1-31" > nohup-2021--1-4.out &
@@ -86,13 +87,14 @@ Some of our runs on gizo were like this (two concurrent jobs to process Jan–Au
 Note that `hwsd/apply_model.py` is a convenience to run the actual core function
 `apply_model_day` on multiple days.
 For a particular day you can also run `hwsd/apply_model_day.py` directly.
+Run the following for usage:
 
     hwsd/apply_model_day.py --help
 
-## Generating the plots
+## Generating plots
 
-This repo also includes code to plots with spectrograms and scores, which
-mainly helped with initial validations.
+This repo also includes code to generte plots with spectrograms and scores,
+which mainly helped with initial validations.
 
 In this case, no command line arguments are expected.
 Edit `hwsd/plot_scores.py` as needed to indicate the
@@ -105,6 +107,7 @@ Each generated plot file will be located next to the corresponding score file.
 Note that `hwsd/plot_scores.py` is a convenience to run the actual core function
 `plot_scores_day` on multiple days. 
 For a particular day you can also run `hwsd/plot_scores_day.py` directly.
+Run the following for usage:
 
     hwsd/plot_scores_day.py --help
 
