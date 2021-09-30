@@ -78,20 +78,28 @@ Usage:
 
     hwsd/apply_model.py time-interval ...
 
-where each time interval must be of the form `yearRange/monthRange/dayRange`,
+where each time interval must be of the form
+`yearRange/monthRange/dayRange` or `yearRange/monthRange`,
 with each `xxRange` either a single number or a hyphen-separated range with inclusive limits.
+If omitted, the day range will be "1-31".
 
 Example: To apply the model on the six full months Oct–Dec'2020 and Jan–Mar'2021:
 
-    hwsd/apply_model.py "2020/10-12/1-31" "2021/1-3/1-31"
+    hwsd/apply_model.py "2020/10-12" "2021/1-3"
 
 Some of our runs on gizo were like the following
 (two concurrent jobs to process Jan–Aug'2021):
 
     source virtenv/bin/activate
     export PYTHONPATH=.
-    nohup python3 -u hwsd/apply_model.py "2021/1-4/1-31" > nohup-2021--1-4.out &
-    nohup python3 -u hwsd/apply_model.py "2021/5-8/1-31" > nohup-2021--5-8.out &
+    nohup python3 -u hwsd/apply_model.py "2021/1-4" > nohup-2021--1-4.out &
+    nohup python3 -u hwsd/apply_model.py "2021/5-8" > nohup-2021--5-8.out &
+
+    nohup python3 -u hwsd/apply_model.py "2018/1-2/1-31" > nohup-2021--1-2.out &
+    nohup python3 -u hwsd/apply_model.py "2018/3-4/1-31" > nohup-2021--3-4.out &
+    nohup python3 -u hwsd/apply_model.py "2018/5-6/1-31" > nohup-2021--5-6.out &
+    nohup python3 -u hwsd/apply_model.py "2018/7-8/1-31" > nohup-2021--7-8.out &
+    nohup python3 -u hwsd/apply_model.py "2018/9-10/1-31" > nohup-2021--9-10.out &
 
 Note that `hwsd/apply_model.py` is a convenience to run the actual core function
 `apply_model_day` on multiple days.

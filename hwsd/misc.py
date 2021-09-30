@@ -30,7 +30,7 @@ def parse_days(*args: str) -> List[Tuple[int, int, int]]:
         limits = range(1, limit + 1)
         frags = [int(x) for x in spec.split("-")]
         if not 1 <= len(frags) <= 2:
-            print(f"ERROR: invalid syntax for interval_values: `{spec}`")
+            print(f"ERROR: invalid syntax for interval: `{spec}`")
             return []
         if len(frags) == 2:
             start, end = frags
@@ -40,15 +40,21 @@ def parse_days(*args: str) -> List[Tuple[int, int, int]]:
 
     res: List[Tuple[int, int, int]] = []
 
+    # for simplicity, we assume the delimited pieces ar numbers.
+
     for arg in args:
         parts = arg.split("/")
-        if len(parts) != 3:
+        if len(parts) == 3:
+            yyy, mmm, ddd = parts
+        elif len(parts) == 2:
+            yyy, mmm = parts
+            ddd = "1-31"
+        else:
             print(f"ERROR: invalid syntax for parse_days: arg=`{arg}`")
             return res
 
         # pylint: disable=invalid-name
 
-        yyy, mmm, ddd = parts
         for yy in yyy.split(","):
             years = interval_values(yy, 9999)
             for mm in mmm.split(","):
