@@ -106,9 +106,9 @@ Five concurrent jobs to process Jan–Oct'2018:
         nohup python3 -u hwsd/apply_model.py "2018/$mr" > "logs/nohup-2018--$mr.out" &
     done
 
-Six concurrent jobs to process 2017:
+Four concurrent jobs to process 2017:
 
-    for mr in 1-2 3-4 5-6 7-8 9-10 11-12; do
+    for mr in 1-3 4-6 7-9 10-12; do
         nohup python3 -u hwsd/apply_model.py "2017/$mr" > "logs/nohup-2017--$mr.out" &
     done
 

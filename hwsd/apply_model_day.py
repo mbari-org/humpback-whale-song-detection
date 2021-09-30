@@ -46,7 +46,8 @@ def apply_model_day(
         return
 
     program_started = time.time()
-    line = f"{year:04}-{month:02}-{day:02} @ {at_hour:02}h dur={hours:02}h model_minutes={model_minutes}"
+    date_tag = f"{year:04}-{month:02}-{day:02}"
+    line = f"{date_tag} @ {at_hour:02}h dur={hours:02}h model_minutes={model_minutes}"
     print(f"### starting apply_model_day: {line}")
 
     print("\n==> Selecting day")
@@ -81,7 +82,7 @@ def apply_model_day(
     for start in range(0, len(psound_segment), to_model_in_samples):
         chunk_label = get_chunk_label(chunk_minutes)
         print(
-            f"\n==> Applying model on {model_minutes}-min chunk starting @ {chunk_label} ..."
+            f"\n==> Applying model on {model_minutes}-min chunk starting @ {chunk_label}  ({date_tag})"
         )
         model_chunk_started = time.time()
         psound_chunk = psound_segment[start : start + to_model_in_samples]
