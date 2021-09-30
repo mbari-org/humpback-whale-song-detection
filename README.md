@@ -56,10 +56,18 @@ via the intermediate, decimated 10kHz version at:
 Note that the NOAA/Google model requires the input signal to be sampled at 10kHz.
 
 We do the necessary resampling beforehand using [`sox`](http://sox.sourceforge.net/). 
-The `resample_sox.sh` script launches a `sox`
-process for each day in a given month. Example:
 
-    ./resample_sox.sh 2018 11
+- `resample_sox.sh`:
+  For a given year and month, this script starts multiple `sox`
+  processes concurrently, one for each day of the month. Example:
+
+        ./resample_sox.sh 2018 11
+
+- `resample_year_months.sh`:
+  Runs `resample_sox.sh` in sequence for all given months in a given year.
+  Example:
+
+        ./resample_year_months.sh 2018 $(seq 1 10)
 
 
 ## Applying the model
@@ -81,6 +89,7 @@ Some of our runs on gizo were like the following
 (two concurrent jobs to process Jan–Aug'2021):
 
     source virtenv/bin/activate
+    export PYTHONPATH=.
     nohup python3 -u hwsd/apply_model.py "2021/1-4/1-31" > nohup-2021--1-4.out &
     nohup python3 -u hwsd/apply_model.py "2021/5-8/1-31" > nohup-2021--5-8.out &
 
