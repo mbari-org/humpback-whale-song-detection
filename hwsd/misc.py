@@ -1,3 +1,6 @@
+"""
+Some misc utilities.
+"""
 import math
 import time
 from calendar import monthrange
@@ -6,6 +9,7 @@ from typing import Tuple, List
 
 def elapsed_end(started: float) -> str:
     """See test_elapsed_end"""
+
     secs = time.time() - started
     seconds = math.floor(secs)
     minutes, seconds = divmod(seconds, 60)
@@ -20,11 +24,13 @@ def elapsed_end(started: float) -> str:
 def parse_days(*args: str) -> List[Tuple[int, int, int]]:
     """See test_parse_days"""
 
-    def interval_values(r: str, limit: int) -> List[int]:
+    # pylint: disable=too-many-locals,too-many-nested-blocks
+
+    def interval_values(spec: str, limit: int) -> List[int]:
         limits = range(1, limit + 1)
-        frags = [int(x) for x in r.split("-")]
+        frags = [int(x) for x in spec.split("-")]
         if not 1 <= len(frags) <= 2:
-            print(f"ERROR: invalid syntax for interval_values: r=`{r}`")
+            print(f"ERROR: invalid syntax for interval_values: `{spec}`")
             return []
         if len(frags) == 2:
             start, end = frags
@@ -39,6 +45,8 @@ def parse_days(*args: str) -> List[Tuple[int, int, int]]:
         if len(parts) != 3:
             print(f"ERROR: invalid syntax for parse_days: arg=`{arg}`")
             return res
+
+        # pylint: disable=invalid-name
 
         yyy, mmm, ddd = parts
         for yy in yyy.split(","):

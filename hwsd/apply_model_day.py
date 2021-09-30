@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-
+"""
+Core module for applying the model.
+"""
 import time
 from argparse import ArgumentParser, RawTextHelpFormatter
-from typing import Union
 
 import numpy as np
 
@@ -12,27 +13,33 @@ from hwsd.model_helper import ModelHelper
 
 
 def get_chunk_label(tot_minutes: int) -> str:
+    """Returns a readable elapsed time."""
     hours, minutes = divmod(tot_minutes, 60)
     return f"{hours:02}h:{minutes:02}m"
 
 
+# pylint: disable=too-many-arguments
+
+
 def apply_model_day(
-    fh: FileHelper,
+    file_helper: FileHelper,
+    model_helper: ModelHelper,
     year: int,
     month: int,
     day: int,
     at_hour: int = 0,
     hours: int = 24,
     model_minutes: int = 10,
-    mh: Union[None, ModelHelper] = None,
 ) -> None:
     """
     Applies the model on a specified audio segment.
     Updates the score file corresponding to the complete year-month-day,
-    of course while retaining any already stored scores outside on the segment.
+    of course while retaining any already stored scores outside the segment.
     """
 
-    if fh.sample_rate != 10_000:
+    # pylint: disable=too-many-locals
+
+    if file_helper.sample_rate != 10_000:
         # A previous version handled this case by doing the resampling (using librosa).
         # but later on we opted to generate the 10kHz files beforehand (using sox).
         print("ERROR: Input signal expected at 10kHz")
@@ -42,20 +49,14 @@ def apply_model_day(
     line = f"{year:04}-{month:02}-{day:02} @ {at_hour:02}h dur={hours:02}h model_minutes={model_minutes}"
     print(f"### starting apply_model_day: {line}")
 
-    if mh is None:
-        mh = ModelHelper()
-        model_load_started = time.time()
-        mh.load_model()
-        print(f"    >> model loaded in {elapsed_end(model_load_started)}")
-
     print("\n==> Selecting day")
-    if not fh.select_day(year, month, day):
+    if not file_helper.select_day(year, month, day):
         return
 
     hours = min(hours, 24 - at_hour)
     print(f"\n==> Loading segment (hours={hours})")
     segment_load_started = time.time()
-    psound_segment, psound_segment_seconds = fh.load_audio_segment(
+    psound_segment, psound_segment_seconds = file_helper.load_audio_segment(
         at_hour=at_hour,
         hours=hours,
     )
@@ -67,7 +68,7 @@ def apply_model_day(
     print(f"    psound_segment_samples_at_10k = {psound_segment_samples_at_10k:,}")
 
     # Get score array for the whole day:
-    day_scores = fh.load_day_scores()
+    day_scores = file_helper.load_day_scores()
 
     # initial offset to update day_scores below:
     day_scores_offset_seconds = at_hour * 60 * 60
@@ -84,7 +85,7 @@ def apply_model_day(
         )
         model_chunk_started = time.time()
         psound_chunk = psound_segment[start : start + to_model_in_samples]
-        chunk_score_values = mh.apply_model(psound_chunk)
+        chunk_score_values = model_helper.apply_model(psound_chunk)
         print(f"    >> model applied on chunk in {elapsed_end(model_chunk_started)}")
         print(f"     chunk_score_values: {len(chunk_score_values):,}")
         if len(chunk_score_values) > to_model_in_seconds:
@@ -110,12 +111,14 @@ def apply_model_day(
         f"\n>> model applied on complete {hours}-hour segment in {elapsed_end(model_application_started)}\n"
     )
 
-    fh.save_day_scores(day_scores)
+    file_helper.save_day_scores(day_scores)
 
     print(f"\n>> complete apply_model_day: {line} in {elapsed_end(program_started)}\n")
 
 
 def parse_arguments():
+    """CLI definition."""
+
     description = "Applies Google Humpback Whale Model on a Pacific Sound day file."
     example = """
 Examples:
@@ -174,11 +177,17 @@ Examples:
     return parser.parse_args()
 
 
-if __name__ == "__main__":
-    opts = parse_arguments()
-    fh = FileHelper(opts.audio_base_dir, opts.score_base_dir)
+def main(opts) -> None:
+    "Main program."
+
+    model_helper = ModelHelper()
+    model_load_started = time.time()
+    model_helper.load_model()
+    print(f"    >> model loaded in {elapsed_end(model_load_started)}")
+
     apply_model_day(
-        fh,
+        FileHelper(opts.audio_base_dir, opts.score_base_dir),
+        model_helper,
         opts.year,
         opts.month,
         opts.day,
@@ -186,3 +195,7 @@ if __name__ == "__main__":
         opts.hours,
         opts.model_minutes,
     )
+
+
+if __name__ == "__main__":
+    main(parse_arguments())

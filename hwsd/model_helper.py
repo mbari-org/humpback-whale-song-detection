@@ -1,3 +1,6 @@
+"""
+Model use utilities.
+"""
 import os
 
 import numpy as np
@@ -16,7 +19,7 @@ CONTEXT_STEP_SAMPLES = tf.cast(10_000, tf.int64)
 
 class ModelHelper:
     """
-    Helps loading and applying the Google model.
+    Helps with loading and applying the Google model.
     """
 
     def __init__(self):
@@ -51,8 +54,8 @@ class ModelHelper:
         metadata_fn = model.signatures["metadata"]
         metadata = metadata_fn()
         print("metadata:")
-        for k, v in metadata.items():
-            print(f"  {k}: {v}")
+        for key, val in metadata.items():
+            print(f"  {key}: {val}")
 
     def apply_model(self, psound: np.ndarray) -> np.ndarray:
         """

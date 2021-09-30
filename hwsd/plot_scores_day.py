@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-
+"""
+Module for plotting the results for a day.
+"""
 from argparse import ArgumentParser, RawTextHelpFormatter
 from typing import Optional
 
@@ -9,6 +11,9 @@ from matplotlib import gridspec
 
 from hwsd.file_helper import FileHelper, DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR
 from hwsd.plotting import plot_spectrogram_scipy, plot_scores
+
+
+# pylint: disable=too-many-arguments
 
 
 def plot_results(
@@ -31,11 +36,11 @@ def plot_results(
     signal = np.array(signal)
 
     fig = plt.figure(figsize=(24, 8))
-    gs = gridspec.GridSpec(2, 1, height_ratios=[1, 1])
+    grid = gridspec.GridSpec(2, 1, height_ratios=[1, 1])
 
     # Plot spectrogram:
     print("    plotting spectrogram")
-    plt.subplot(gs[0])
+    plt.subplot(grid[0])
     plot_spectrogram_scipy(
         signal,
         sample_rate,
@@ -46,7 +51,7 @@ def plot_results(
 
     # Plot scores:
     print("    plotting scores")
-    fig.add_subplot(gs[1])
+    fig.add_subplot(grid[1])
     plot_scores(
         scores,
         with_dots=scores_with_dots,
@@ -64,8 +69,11 @@ def plot_results(
         plt.show()
 
 
+# pylint: disable=too-many-arguments
+
+
 def plot_segment(
-    fh: FileHelper,
+    file_helper: FileHelper,
     year: int,
     month: int,
     day: int,
@@ -75,16 +83,20 @@ def plot_segment(
     minutes: int = 0,
     show_plot: bool = False,
 ):
+    """Plots an audio segment."""
+
+    # pylint: disable=too-many-locals
+
     print("\n==> Selecting day")
-    if not fh.select_day(year, month, day):
+    if not file_helper.select_day(year, month, day):
         return
 
     print("\n==> Loading audio segment")
-    psound_segment, psound_segment_seconds = fh.load_audio_segment(
+    psound_segment, psound_segment_seconds = file_helper.load_audio_segment(
         at_hour=at_hour, at_minute=at_minute, hours=hours, minutes=minutes
     )
 
-    scores_dest_dir = f"{fh.score_base_dir}/{year:04}/{month:02}"
+    scores_dest_dir = f"{file_helper.score_base_dir}/{year:04}/{month:02}"
     score_filename = f"{scores_dest_dir}/Scores-{year:04}{month:02}{day:02}.npy"
     print(f"\n==> Loading score segment {score_filename}")
     day_scores = np.load(score_filename)
@@ -110,7 +122,7 @@ def plot_segment(
     plot_results(
         segment_scores,
         signal=psound_segment,
-        sample_rate=fh.sample_rate,
+        sample_rate=file_helper.sample_rate,
         hydrophone_sensitivity=-168.8,
         title=title,
         scores_with_dots=True,
@@ -121,6 +133,8 @@ def plot_segment(
 
 
 def parse_arguments():
+    """CLI definition."""
+
     description = "Plots Google Humpback Whale Model Scores."
     example = """
 The base directory to read in audio files is by default {DEFAULT_AUDIO_BASE_DIR}.
@@ -188,9 +202,8 @@ Examples:
 
 if __name__ == "__main__":
     opts = parse_arguments()
-    fh = FileHelper(opts.audio_base_dir, opts.score_base_dir)
     plot_segment(
-        fh,
+        FileHelper(opts.audio_base_dir, opts.score_base_dir),
         opts.year,
         opts.month,
         opts.day,

@@ -1,3 +1,6 @@
+"""
+Plotting utilities.
+"""
 from typing import Optional
 
 import matplotlib.pyplot as plt
@@ -16,14 +19,16 @@ def plot_spectrogram_scipy(
     title: Optional[str] = None,
     with_colorbar: bool = True,
 ) -> None:
+    """Plots a spectrogram."""
+
     # Compute spectrogram:
-    w = sp_signal.get_window("hann", sample_rate)
+    window = sp_signal.get_window("hann", sample_rate)
     _, _, psd = sp_signal.spectrogram(
         signal,
         sample_rate,
         nperseg=sample_rate,
         noverlap=0,
-        window=w,
+        window=window,
         nfft=sample_rate,
     )
     psd = 10 * np.log10(psd) - hydrophone_sensitivity
@@ -57,16 +62,18 @@ def plot_scores(
     with_dots: bool = True,
     med_filt_size: Optional[int] = None,
 ) -> None:
+    """Plots the given scores."""
+
     if with_steps:
         # repeat last value to also see a step at the end:
         scores = np.concatenate((scores, scores[-1:]))
-        x = range(len(scores))
-        plt.step(x, scores, where="post")
+        x_values = range(len(scores))
+        plt.step(x_values, scores, where="post")
     else:
-        x = range(len(scores))
+        x_values = range(len(scores))
 
     if with_dots:
-        plt.plot(x, scores, "o", color="lightgrey", markersize=9)
+        plt.plot(x_values, scores, "o", color="lightgrey", markersize=9)
 
     plt.grid(axis="x", color="0.95")
     plt.xlim(xmin=0, xmax=len(scores) - 1)
@@ -77,4 +84,4 @@ def plot_scores(
         scores_int = [int(s * 1000) for s in scores]
         meds_int = sp_signal.medfilt(scores_int, kernel_size=med_filt_size)
         meds = [m / 1000.0 for m in meds_int]
-        plt.plot(x, meds, "p", color="black", markersize=9)
+        plt.plot(x_values, meds, "p", color="black", markersize=9)

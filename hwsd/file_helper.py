@@ -1,7 +1,10 @@
+"""
+File handling utilities.
+"""
 import os
 import sys
 from math import ceil, floor
-from typing import Tuple, Union
+from typing import Tuple, Optional
 
 import numpy as np
 import soundfile as sf
@@ -28,14 +31,18 @@ class FileHelper:
             )
             sys.exit(1)
 
-        self.sample_rate = 10_000
         self.audio_base_dir: str = audio_base_dir
         self.score_base_dir: str = score_base_dir
-        self.audio_filename: Union[None, str] = None
-        self.score_filename: Union[None, str] = None
+        self.audio_filename: Optional[str] = None
+        self.score_filename: Optional[str] = None
         self.year: int = 0
         self.month: int = 0
         self.day: int = 0
+
+    @property
+    def sample_rate(self) -> int:
+        """The handled sample rate, 10kHz."""
+        return 10_000
 
     def select_day(self, year: int, month: int, day: int) -> bool:
         """
@@ -85,14 +92,14 @@ class FileHelper:
         num_samples = ceil(psound_segment_seconds * self.sample_rate)
 
         print(f"Loading {num_samples:,} samples starting at {start_sample:,}")
-        psound_segment, sr = sf.read(
+        psound_segment, sample_rate = sf.read(
             self.audio_filename,
             start=start_sample,
             frames=num_samples,
             dtype="float32",
         )
 
-        assert self.sample_rate == sr  # sanity check
+        assert self.sample_rate == sample_rate  # sanity check
 
         print(f"    num_samples         = {num_samples:,}")
         print(f"    len(psound_segment) = {len(psound_segment):,}")
