@@ -109,3 +109,6 @@ The default task in the makefile does type checking, testing and code formatting
 and address any issues, or check with the team about any known pylint complaints.
 
 See [`makefile`](makefile) for all available tasks.
+
+> You can also run [`just`](https://github.com/casey/just) if available on the system.
+> For example, run `just list` for a nice summary of the available "recipes."

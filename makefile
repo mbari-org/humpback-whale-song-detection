@@ -1,3 +1,10 @@
+#
+# Makefile that facilitates various development tasks.
+#
+# It is soft-linked as `justfile` in case you want to
+# use `just` - https://github.com/casey/just.
+#
+
 # A convenient default for development: type check, test, and format
 default:
 	make check test format
@@ -6,6 +13,10 @@ default:
 all:
 	make check test format pylint
 
+# List recipes (needs `just`)
+list:
+	@just --list --unsorted
+ 
 # Install dependencies
 setup:
 	pip install -r requirements.txt
