@@ -6,12 +6,10 @@
 #
 
 # A convenient default for development: type check, test, and format
-default:
-	make check test format
+default: check test format
 
 # As default plus pylint; good to run before committing
-all:
-	make check test format pylint
+all: default pylint
 
 # List recipes (needs `just`)
 list:
