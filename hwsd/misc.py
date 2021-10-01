@@ -40,7 +40,7 @@ def parse_days(*args: str) -> List[Tuple[int, int, int]]:
 
     res: List[Tuple[int, int, int]] = []
 
-    # for simplicity, we assume the delimited pieces ar numbers.
+    # for simplicity, we assume the delimited pieces are numbers.
 
     for arg in args:
         parts = arg.split("/")
