@@ -18,13 +18,18 @@ Some notebooks where code developed here has been used:
     source virtenv/bin/activate
     pip install -r requirements.txt
 
-> Note: The `pip` install command above has failed a couple of times on gizo, with
-> problems related with tensorflow. I've quickly solved this with a combination of
-> explicit installation of tensorflow, one time with `pip install --upgrade 'tensorflow>=2.0.0'`,
-> and other time with just `pip install tensorflow` under one other fresh virtualenv.
-
 In subsequent sessions, just run `source virtenv/bin/activate`
-to set up the python environment.
+to activate the python environment.
+
+## Want to use this on your machine?
+
+Default settings and examples below are mainly in terms of our own setup on
+a particular machine ("gizo"), where `/PAM_Analysis/` is a base directory
+for various locations.
+Although some scripts here accept options to set relevant locations,
+you may also find convenient to directly adjust the
+`DEFAULT_AUDIO_BASE_DIR` and `DEFAULT_SCORE_BASE_DIR` settings
+in [hwsd/file_helper.py](hwsd/file_helper.py).
 
 ## Gizo
 
