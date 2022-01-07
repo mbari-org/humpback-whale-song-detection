@@ -12,6 +12,8 @@ Some notebooks where code developed here has been used:
 - <https://colab.research.google.com/drive/13HinPes8vi39yjb7nD3ZULpB3eXZFxvc>
 - <https://colab.research.google.com/drive/11gxYzDKPgyqncu1ooiTrH-iWtemkFIJJ>
 
+See also: <https://docs.mbari.org/pacific-sound/>.
+
 ## Setup
 
     python3 -m venv virtenv
