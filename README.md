@@ -70,6 +70,11 @@ We do the necessary resampling beforehand using [`sox`](http://sox.sourceforge.n
 
         ./resample_year_months.sh 2018 $(seq 1 10)
 
+A recent resampling exercise on gizo (Sept to Dec, 2021):
+
+    cd /opt/humpback/humpback-whale-song-detection
+    nohup ./resample_year_months.sh 2021 $(seq 9 12) > logs/nohup_resample_2021_9_to_12.out &
+
 
 ## Applying the model
 
@@ -99,6 +104,12 @@ Two concurrent jobs to process Jan–Aug'2021:
 
     nohup python3 -u hwsd/apply_model.py "2021/1-4" > logs/nohup-2021--1-4.out &
     nohup python3 -u hwsd/apply_model.py "2021/5-8" > logs/nohup-2021--5-8.out &
+
+Two concurrent jobs to process Sept–Dec'2021:
+
+    for mr in 9-10 11-12; do
+        nohup python3 -u hwsd/apply_model.py "2021/$mr" > "logs/nohup-2021--$mr.out" &
+    done
 
 Five concurrent jobs to process Jan–Oct'2018:
 
