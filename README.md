@@ -112,9 +112,9 @@ Two concurrent jobs to process Jan–Aug'2021:
     nohup python3 -u hwsd/apply_model.py "2021/1-4" > logs/nohup-2021--1-4.out &
     nohup python3 -u hwsd/apply_model.py "2021/5-8" > logs/nohup-2021--5-8.out &
 
-Two concurrent jobs to process Sept–Dec'2021:
+Four concurrent jobs (one per month) to process Sept–Dec'2021:
 
-    for mr in 9-10 11-12; do
+    for mr in 9 10 11 12; do
         nohup python3 -u hwsd/apply_model.py "2021/$mr" > "logs/nohup-2021--$mr.out" &
     done
 
@@ -130,9 +130,14 @@ Four concurrent jobs to process 2017:
         nohup python3 -u hwsd/apply_model.py "2017/$mr" > "logs/nohup-2017--$mr.out" &
     done
 
-Note that `hwsd/apply_model.py` is a convenience to run the actual core function
-`apply_model_day` on multiple days.
-For a particular day you can also run `hwsd/apply_model_day.py` directly.
+NOTE: 
+`hwsd/apply_model.py` is mainly a convenience to run the actual core function
+`apply_model_day` on multiple days. In particular, note that `HOURS_PER_CALL`
+and `MODEL_MINUTES` are two key settings that you may need to adjust depending
+on available memory on the system. See `hwsd/apply_model.py` for more details. 
+
+You can also run `hwsd/apply_model_day.py` directly and with options from the
+command line to set any relevant parameters as needed.
 Run the following for usage:
 
     hwsd/apply_model_day.py --help
