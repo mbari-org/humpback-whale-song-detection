@@ -9,7 +9,7 @@ from typing import Tuple, Optional
 import numpy as np
 import soundfile as sf
 
-DEFAULT_AUDIO_BASE_DIR = "/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz/"
+DEFAULT_AUDIO_BASE_DIR = "/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
 
 DEFAULT_SCORE_BASE_DIR = "/PAM_Analysis/GoogleHumpbackModel/Scores"
 
