@@ -84,6 +84,12 @@ A recent resampling exercise on gizo (Sept to Dec, 2021):
 
     nohup ./resample_year_months.sh 2022 $(seq 1 3) > logs/nohup_resample_2022_1_to_3.out &
 
+(ongoing) A more recent resampling exercise on gizo:
+
+    cd /opt/humpback/humpback-whale-song-detection
+    mkdir -p logs
+    nohup ./resample_year_months.sh 2023 $(seq 1 1) > logs/nohup_resample_2023_1_to_1.out &
+
 ## Applying the model
 
 Run `hwsd/apply_model.py` indicating the years, months, and days to process.
