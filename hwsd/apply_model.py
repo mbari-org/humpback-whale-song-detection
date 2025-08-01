@@ -9,7 +9,7 @@ import time
 from typing import List
 
 from hwsd.apply_model_day import apply_model_day
-from hwsd.file_helper import FileHelper, DEFAULT_SCORE_BASE_DIR
+from hwsd.file_helper import DEFAULT_SCORE_BASE_DIR, FileHelper
 from hwsd.misc import elapsed_end, parse_days
 from hwsd.model_helper import ModelHelper
 
@@ -38,7 +38,7 @@ def main(intervals: List[str]) -> None:
     program_started = time.time()
 
     # With 10kHz already pre-generated:
-    audio_base_dir = "/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
+    audio_base_dir = "/mnt/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
     # (The default in file_helper is to read from the 16kHz data.)
 
     model_helper = ModelHelper()

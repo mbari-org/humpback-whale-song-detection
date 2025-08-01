@@ -7,7 +7,7 @@ from argparse import ArgumentParser, RawTextHelpFormatter
 
 import numpy as np
 
-from hwsd.file_helper import FileHelper, DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR
+from hwsd.file_helper import DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR, FileHelper
 from hwsd.misc import elapsed_end
 from hwsd.model_helper import ModelHelper
 

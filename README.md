@@ -16,17 +16,17 @@ See also: <https://docs.mbari.org/pacific-sound/>.
 
 ## Setup
 
-    python3 -m venv virtenv
-    source virtenv/bin/activate
-    pip install -r requirements.txt
+    python3 -m venv venv
+    source venv/bin/activate
+    python3 -m pip install -r requirements.txt
 
-In subsequent sessions, just run `source virtenv/bin/activate`
+In subsequent sessions, just run `source venv/bin/activate`
 to activate the python environment.
 
 ## Want to use this on your machine?
 
 Default settings and examples below are mainly in terms of our own setup on
-a particular machine ("gizo"), where `/PAM_Analysis/` is a base directory
+a particular machine ("gizo"), where `/mnt/PAM_Analysis/` is a base directory
 for various locations.
 Although some scripts here accept options to set relevant locations,
 you may also find convenient to directly adjust the
@@ -40,23 +40,23 @@ On gizo, a copy of the code in this repo is located under
 
 Base directories:
 
-- `/PAM_Analysis/decimated_16kHz/` - Input audio files sampled at 16kHz
+- `/mnt/PAM_Analysis/decimated_16kHz/` - Input audio files sampled at 16kHz
 
-- `/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz/` - Input audio files resampled to 10kHz
+- `/mnt/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz/` - Input audio files resampled to 10kHz
 
-- `/PAM_Analysis/GoogleHumpbackModel/Scores/` - Generated score files
+- `/mnt/PAM_Analysis/GoogleHumpbackModel/Scores/` - Generated score files
 
 With 2016-11-01 as an example:
 
-`/PAM_Analysis/GoogleHumpbackModel/Scores/2016/11/Scores-20161101.npy`
+`/mnt/PAM_Analysis/GoogleHumpbackModel/Scores/2016/11/Scores-20161101.npy`
 
 will be the model score file corresponding to the audio file:
 
-`/PAM_Analysis/decimated_16kHz/2016/11/MARS-20161101T000000Z-16kHz.wav`
+`/mnt/PAM_Analysis/decimated_16kHz/2016/11/MARS-20161101T000000Z-16kHz.wav`
 
 via the intermediate, decimated 10kHz version at:
 
-`/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz/2016/11/MARS-20161101T000000Z-10kHz.wav`
+`/mnt/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz/2016/11/MARS-20161101T000000Z-10kHz.wav`
 
 ## Resampling to 10kHz
 
@@ -104,7 +104,7 @@ Example: To apply the model on the six months Oct–Dec'2020 and Jan–Mar'2021:
 
 Some of our runs on gizo have been like the following:
 
-    source virtenv/bin/activate
+    source venv/bin/activate
     export PYTHONPATH=.
     mkdir -p logs
 

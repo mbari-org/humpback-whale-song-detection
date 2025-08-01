@@ -17,28 +17,36 @@ list:
  
 # Install dependencies
 setup:
-	pip install -r requirements.txt
+	python3 -m pip install -r requirements.txt
 
 # Do static type checking (not very strict)
 check:
-	python -m mypy hwsd
+	python3 -m mypy hwsd
 
 # Install std types for mypy
 install-types:
-	python -m mypy --install-types
+	python3 -m mypy --install-types
 
 # Run tests
 test:
-	python -m pytest --show-capture=all
+	python3 -m pytest --show-capture=all
 
 # Format source code
 format:
-	python -m ufmt format hwsd
+	python3 -m ufmt format hwsd
 
 # Run pylint
 pylint:
-	python -m pylint hwsd
+	python3 -m pylint hwsd
 
 # Show latest few tags
 tags:
 	git tag -l | sort -V | tail
+
+clean:
+	rm -rf .mypy_cache
+	rm -rf .pytest_cache
+	rm -rf hwsd.egg-info
+	rm -rf dist
+	rm -rf build
+	rm -rf .ruff_cache

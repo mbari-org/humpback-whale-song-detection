@@ -1,6 +1,6 @@
 google
 Cross_02_060203_071428.d20_7.wav
-virtenv/
+venv/
 __pycache__/
 nohup*.out
 *.tar

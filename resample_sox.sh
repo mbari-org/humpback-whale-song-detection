@@ -11,8 +11,8 @@ year=$1
 month=$2
 days=$(seq 1 31)  # for convenience 1–31 regardless of month
 
-audio_base_dir="/PAM_Analysis/decimated_16kHz"
-decimated_base_dir="/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
+audio_base_dir="/mnt/PAM_Analysis/decimated_16kHz"
+decimated_base_dir="/mnt/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
 
 days_line="$(echo "${days}" | tr '\n' ' ')"
 

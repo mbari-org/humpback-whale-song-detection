@@ -9,9 +9,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import gridspec
 
-from hwsd.file_helper import FileHelper, DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR
-from hwsd.plotting import plot_spectrogram_scipy, plot_scores
-
+from hwsd.file_helper import DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR, FileHelper
+from hwsd.plotting import plot_scores, plot_spectrogram_scipy
 
 # pylint: disable=too-many-arguments
 

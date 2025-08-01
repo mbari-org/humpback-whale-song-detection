@@ -1,10 +1,11 @@
 """
 Some misc utilities.
 """
+
 import math
 import time
 from calendar import monthrange
-from typing import Tuple, List
+from typing import List, Tuple
 
 
 def elapsed_end(started: float) -> str:

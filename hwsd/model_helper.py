@@ -1,6 +1,7 @@
 """
 Model use utilities.
 """
+
 import os
 
 import numpy as np

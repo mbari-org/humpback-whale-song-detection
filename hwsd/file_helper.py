@@ -1,17 +1,18 @@
 """
 File handling utilities.
 """
+
 import os
 import sys
 from math import ceil, floor
-from typing import Tuple, Optional
+from typing import Optional, Tuple
 
 import numpy as np
 import soundfile as sf
 
-DEFAULT_AUDIO_BASE_DIR = "/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
+DEFAULT_AUDIO_BASE_DIR = "/mnt/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
 
-DEFAULT_SCORE_BASE_DIR = "/PAM_Analysis/GoogleHumpbackModel/Scores"
+DEFAULT_SCORE_BASE_DIR = "/mnt/PAM_Analysis/GoogleHumpbackModel/Scores"
 
 
 class FileHelper:
@@ -132,4 +133,5 @@ class FileHelper:
         Updates the score file for the selected day.
         """
         print(f"Saving scores in {self.score_filename}")
+        assert self.score_filename
         np.save(self.score_filename, day_scores)

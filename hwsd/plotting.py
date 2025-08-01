@@ -1,6 +1,7 @@
 """
 Plotting utilities.
 """
+
 from typing import Optional
 
 import matplotlib.pyplot as plt
