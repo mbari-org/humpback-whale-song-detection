@@ -23,6 +23,18 @@ See also: <https://docs.mbari.org/pacific-sound/>.
 In subsequent sessions, just run `source venv/bin/activate`
 to activate the python environment.
 
+### Using GPU?
+
+Per https://www.tensorflow.org/install/pip:
+
+    python3 -m pip install 'tensorflow[and-cuda]'
+    python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+
+> The output of the verification above may look like:
+> ```
+> [PhysicalDevice(name='/physical_device:GPU:0', device_type='GPU'), PhysicalDevice(name='/physical_device:GPU:1', device_type='GPU')]
+> ```
+
 ## Want to use this on your machine?
 
 Default settings and examples below are mainly in terms of our own setup on
