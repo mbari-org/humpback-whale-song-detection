@@ -29,4 +29,4 @@ for day in ${days}; do
 done
 wait
 
-printf "\nCompleted resample_sox.sh for %04d-%02d days:%s" "${year}" "${month}" "${days_line}"
+printf "\nCompleted resample_sox.sh for %04d-%02d days:%s\n" "${year}" "${month}" "${days_line}"
