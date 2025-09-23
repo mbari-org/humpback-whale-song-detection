@@ -14,6 +14,8 @@ Some notebooks where code developed here has been used:
 
 See also: <https://docs.mbari.org/pacific-sound/>.
 
+![](img/hwsd_spectra_n_scores.png)
+
 ## Setup
 
     python3 -m venv venv
