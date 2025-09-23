@@ -185,17 +185,20 @@ Run the following for usage:
 
 ## Development
 
-With the setup in place, run the following on a regular basis
-as you work with the code:
+With the environment setup in place, which can be done with:
 
-    make
+    just setup
 
-The default task in the makefile does type checking, testing and code formatting.
+run the following on a regular basis as you work with the code:
+
+    just dev
+
+This task does code formatting, type checking, and testing.
 
 **NOTE**: Before committing/pushing any changes, be sure to also run:
 
-    make pylint
+    just pylint
 
 and address any issues, or check with the team about any known pylint complaints.
 
-See [`makefile`](makefile) for all available tasks.
+See [`justfile`](justfile) for all available tasks.
