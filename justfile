@@ -14,6 +14,14 @@ setup:
     source venv/bin/activate
     python3 -m pip install -r requirements.txt
 
+# setup when python3-venv package is not available
+setup_no_python3-venv:
+    #!/usr/bin/env bash
+    python3 -m venv venv --without-pip
+    source venv/bin/activate
+    curl https://bootstrap.pypa.io/get-pip.py | python
+    python3 -m pip install -r requirements.txt
+
 # A convenient recipe for development
 dev: format check test
 
