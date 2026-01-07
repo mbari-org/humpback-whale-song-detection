@@ -1,8 +1,30 @@
 google
 logs/
 Cross_02_060203_071428.d20_7.wav
+
+# Virtual environments
 venv/
+.venv/
+
+# Python cache
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Cache directories
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Other
 nohup*.out
 *.tar
 *.tgz
+*.local.json

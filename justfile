@@ -7,19 +7,19 @@
 _list:
     @just --list --unsorted
 
-# Create virtenv and install dependencies
+# Install uv package manager
+install-uv:
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Create uv environment and install dependencies
 setup:
+    uv sync
+
+# Legacy setup using venv (deprecated)
+setup-venv:
     #!/usr/bin/env bash
     python3 -m venv venv
     source venv/bin/activate
-    python3 -m pip install -r requirements.txt
-
-# setup when python3-venv package is not available
-setup_no_python3-venv:
-    #!/usr/bin/env bash
-    python3 -m venv venv --without-pip
-    source venv/bin/activate
-    curl https://bootstrap.pypa.io/get-pip.py | python
     python3 -m pip install -r requirements.txt
 
 # A convenient recipe for development
@@ -27,33 +27,23 @@ dev: format check test
 
 # Do static type checking (not very strict)
 check:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m mypy hwsd
+    uv run mypy hwsd
 
 # Install std types for mypy
 install-types:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m mypy --install-types
+    uv run mypy --install-types
 
 # Run tests
 test:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m pytest --show-capture=all
+    uv run pytest --show-capture=all
 
 # Format source code
 format:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m ufmt format hwsd
+    uv run ufmt format hwsd
 
 # Run pylint
 pylint:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m pylint hwsd
+    uv run pylint hwsd
 
 # Show latest few tags
 tags:
@@ -66,3 +56,4 @@ clean:
     rm -rf dist
     rm -rf build
     rm -rf .ruff_cache
+    rm -rf .venv

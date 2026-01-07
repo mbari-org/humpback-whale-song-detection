@@ -18,12 +18,29 @@ See also: <https://docs.mbari.org/pacific-sound/>.
 
 ## Setup
 
+This project uses [uv](https://docs.astral.sh/uv/) for dependency management.
+
+Install uv if you haven't already:
+
+    just install-uv
+
+Or manually:
+
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+Then set up the project:
+
+    just setup
+
+That's it! No need to manually activate environments - `uv run` handles that automatically.
+
+### Legacy venv setup (deprecated)
+
+If you prefer the traditional approach:
+
     python3 -m venv venv
     source venv/bin/activate
     python3 -m pip install -r requirements.txt
-
-In subsequent sessions, just run `source venv/bin/activate`
-to activate the python environment.
 
 ### Using GPU?
 
@@ -124,31 +141,29 @@ Example: To apply the model on the six months Oct–Dec'2020 and Jan–Mar'2021:
 
 Some of our runs on gizo have been like the following:
 
-    source venv/bin/activate
-    export PYTHONPATH=.
     mkdir -p logs
 
 Two concurrent jobs to process Jan–Aug'2021:
 
-    nohup python3 -u hwsd/apply_model.py "2021/1-4" > logs/nohup-2021--1-4.out &
-    nohup python3 -u hwsd/apply_model.py "2021/5-8" > logs/nohup-2021--5-8.out &
+    nohup uv run python3 -u hwsd/apply_model.py "2021/1-4" > logs/nohup-2021--1-4.out &
+    nohup uv run python3 -u hwsd/apply_model.py "2021/5-8" > logs/nohup-2021--5-8.out &
 
 Four concurrent jobs (one per month) to process Sept–Dec'2021:
 
     for mr in 9 10 11 12; do
-        nohup python3 -u hwsd/apply_model.py "2021/$mr" > "logs/nohup-2021--$mr.out" &
+        nohup uv run python3 -u hwsd/apply_model.py "2021/$mr" > "logs/nohup-2021--$mr.out" &
     done
 
 Five concurrent jobs to process Jan–Oct'2018:
 
     for mr in 1-2 3-4 5-6 7-8 9-10; do
-        nohup python3 -u hwsd/apply_model.py "2018/$mr" > "logs/nohup-2018--$mr.out" &
+        nohup uv run python3 -u hwsd/apply_model.py "2018/$mr" > "logs/nohup-2018--$mr.out" &
     done
 
 Four concurrent jobs to process 2017:
 
     for mr in 1-3 4-6 7-9 10-12; do
-        nohup python3 -u hwsd/apply_model.py "2017/$mr" > "logs/nohup-2017--$mr.out" &
+        nohup uv run python3 -u hwsd/apply_model.py "2017/$mr" > "logs/nohup-2017--$mr.out" &
     done
 
 NOTE: 
@@ -187,7 +202,7 @@ Run the following for usage:
 
 ## Development
 
-With the environment setup in place, which can be done with:
+With the environment setup in place using uv:
 
     just setup
 
@@ -195,7 +210,7 @@ run the following on a regular basis as you work with the code:
 
     just dev
 
-This task does code formatting, type checking, and testing.
+This task does code formatting, type checking, and testing. All tasks now use `uv run` automatically.
 
 **NOTE**: Before committing/pushing any changes, be sure to also run:
 

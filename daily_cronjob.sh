@@ -39,14 +39,9 @@ printf "=== [%s]: Processing: %04d-%02d-%02d\n" \
 echo "Resampling audio file..."
 ./resample_sox.sh "$year" "$month" "$day" 2>&1
 
-# Activate virtual environment and set up environment
-echo "Activating virtual environment..."
-source venv/bin/activate 2>&1
-export PYTHONPATH=.
-
 # Apply the humpback whale song detection model
 echo "Applying humpback whale song detection model..."
-python3 -u hwsd/apply_model.py "$year/$month/$day" > "logs/nohup-$year-$month-$day.out" 2>&1
+uv run python3 -u hwsd/apply_model.py "$year/$month/$day" > "logs/nohup-$year-$month-$day.out" 2>&1
 
 # Remove the resampled 10kHz file
 echo "Cleaning up resampled file..."

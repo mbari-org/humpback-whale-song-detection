@@ -1,0 +1,43 @@
+[project]
+name = "humpback-whale-song-detection"
+version = "0.1.0"
+description = "Applying the NOAA/Google Humpback Whale Song Detector on Pacific Ocean Sound data"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "matplotlib",
+    "scipy",
+    "soundfile",
+    "numpy",
+    "tensorflow",
+    "tensorflow-hub",
+]
+
+[project.urls]
+Homepage = "https://github.com/mbari-org/humpback-whale-song-detection"
+
+[tool.uv]
+dev-dependencies = [
+    "mypy",
+    "black",
+    "pytest",
+    "usort",
+    "ufmt",
+    "pylint",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.black]
+line-length = 88
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
