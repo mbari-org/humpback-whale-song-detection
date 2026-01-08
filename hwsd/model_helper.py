@@ -65,6 +65,8 @@ class ModelHelper:
         :param psound:  The input signal, assumed sampled at 10 kHz.
         :return:        Array of corresponding scores at 1-sec resolution.
         """
+        assert self.score_fn is not None, "Model not loaded. Call load_model() first."
+
         waveform1 = np.expand_dims(psound, axis=1)
         waveform_exp = tf.expand_dims(waveform1, 0)  # makes a batch of size 1
 

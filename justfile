@@ -25,13 +25,9 @@ setup-venv:
 # A convenient recipe for development
 dev: format check test
 
-# Do static type checking (not very strict)
+# Do static type checking with ty
 check:
-    uv run mypy hwsd
-
-# Install std types for mypy
-install-types:
-    uv run mypy --install-types
+    uv run ty check hwsd
 
 # Run tests
 test:
