@@ -26,13 +26,14 @@ check:
 test:
     uv run pytest --show-capture=all
 
-# Format source code
+# Format source code with ruff
 format:
-    uv run ufmt format hwsd
+    uv run ruff format hwsd
+    uv run ruff check --select I --fix hwsd
 
-# Run pylint
-pylint:
-    uv run pylint hwsd
+# Run ruff linter
+lint:
+    uv run ruff check hwsd
 
 # Show latest few tags
 tags:

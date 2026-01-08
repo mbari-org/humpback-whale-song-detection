@@ -2,6 +2,7 @@
 """
 Core module for applying the model.
 """
+
 import time
 from argparse import ArgumentParser, RawTextHelpFormatter
 

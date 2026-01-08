@@ -206,8 +206,8 @@ This task does code formatting, type checking, and testing. All tasks now use `u
 
 **NOTE**: Before committing/pushing any changes, be sure to also run:
 
-    just pylint
+    just lint
 
-and address any issues, or check with the team about any known pylint complaints.
+and address any issues.
 
 See [`justfile`](justfile) for all available tasks.

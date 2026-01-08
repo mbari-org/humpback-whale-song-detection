@@ -2,6 +2,7 @@
 """
 Module for plotting the results for a day.
 """
+
 from argparse import ArgumentParser, RawTextHelpFormatter
 from typing import Optional
 

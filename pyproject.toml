@@ -19,11 +19,8 @@ Homepage = "https://github.com/mbari-org/humpback-whale-song-detection"
 [dependency-groups]
 dev = [
     "ty",
-    "black",
     "pytest",
-    "usort",
-    "ufmt",
-    "pylint",
+    "ruff",
 ]
 
 [build-system]
@@ -33,8 +30,18 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["hwsd"]
 
-[tool.black]
-line-length = 88
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+# Enable common ruff rules
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+]
 
 [tool.pytest.ini_options]
 testpaths = ["hwsd"]
