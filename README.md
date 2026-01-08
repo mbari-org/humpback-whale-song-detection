@@ -34,14 +34,6 @@ Then set up the project:
 
 That's it! No need to manually activate environments - `uv run` handles that automatically.
 
-### Legacy venv setup (deprecated)
-
-If you prefer the traditional approach:
-
-    python3 -m venv venv
-    source venv/bin/activate
-    python3 -m pip install -r requirements.txt
-
 ### Using GPU?
 
 Per https://www.tensorflow.org/install/pip:

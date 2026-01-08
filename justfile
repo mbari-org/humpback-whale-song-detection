@@ -15,13 +15,6 @@ install-uv:
 setup:
     uv sync
 
-# Legacy setup using venv (deprecated)
-setup-venv:
-    #!/usr/bin/env bash
-    python3 -m venv venv
-    source venv/bin/activate
-    python3 -m pip install -r requirements.txt
-
 # A convenient recipe for development
 dev: format check test
 
