@@ -27,9 +27,7 @@ class FileHelper:
         score_base_dir: str = DEFAULT_SCORE_BASE_DIR,
     ):
         if not audio_base_dir.endswith("10kHz"):
-            print(
-                f"ERROR: Expecting audio_base_dir to end with `10kHz`: {audio_base_dir}"
-            )
+            print(f"ERROR: Expecting audio_base_dir to end with `10kHz`: {audio_base_dir}")
             sys.exit(1)
 
         self.audio_base_dir: str = audio_base_dir
@@ -52,9 +50,7 @@ class FileHelper:
         :return:  True only if corresponding audio file exists.
         """
         simple_name = f"MARS-{year:04}{month:02}{day:02}T000000Z-10kHz.wav"
-        self.audio_filename = (
-            f"{self.audio_base_dir}/{year:04}/{month:02}/{simple_name}"
-        )
+        self.audio_filename = f"{self.audio_base_dir}/{year:04}/{month:02}/{simple_name}"
         print(f"select_day {year:04}-{month:02}-{day:02}: {self.audio_filename}")
 
         if not os.path.isfile(self.audio_filename):
@@ -63,9 +59,7 @@ class FileHelper:
 
         scores_dest_dir = f"{self.score_base_dir}/{year:04}/{month:02}"
         os.makedirs(scores_dest_dir, exist_ok=True)
-        self.score_filename = (
-            f"{scores_dest_dir}/Scores-{year:04}{month:02}{day:02}.npy"
-        )
+        self.score_filename = f"{scores_dest_dir}/Scores-{year:04}{month:02}{day:02}.npy"
 
         self.year = year
         self.month = month
@@ -84,9 +78,7 @@ class FileHelper:
         """
         assert self.audio_filename is not None
 
-        print(
-            f"load_audio_segment @ {at_hour:02}h:{at_minute:02} dur={hours:02}h:{minutes:02}m"
-        )
+        print(f"load_audio_segment @ {at_hour:02}h:{at_minute:02} dur={hours:02}h:{minutes:02}m")
         start_time_secs = (at_hour * 60 + at_minute) * 60
         psound_segment_seconds = (hours * 60 + minutes) * 60
         start_sample = floor(start_time_secs * self.sample_rate)

@@ -52,9 +52,7 @@ def plot_spectrogram_scipy(
 
     plt.xlabel("Seconds")
     plt.ylabel("Frequency (Hz)")
-    plt.title(
-        title or f"Calibrated spectrum levels, 16 {sample_rate / 1000.0} kHz data"
-    )
+    plt.title(title or f"Calibrated spectrum levels, 16 {sample_rate / 1000.0} kHz data")
 
 
 def plot_scores(

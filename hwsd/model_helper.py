@@ -72,7 +72,5 @@ class ModelHelper:
         waveform1 = np.expand_dims(psound, axis=1)
         waveform_exp = tf.expand_dims(waveform1, 0)  # makes a batch of size 1
 
-        psound_scores = self.score_fn(
-            waveform=waveform_exp, context_step_samples=context_step_samples
-        )
+        psound_scores = self.score_fn(waveform=waveform_exp, context_step_samples=context_step_samples)
         return psound_scores["scores"].numpy()[0]

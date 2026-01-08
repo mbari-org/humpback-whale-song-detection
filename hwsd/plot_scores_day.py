@@ -101,9 +101,7 @@ def plot_segment(
     print(f"\n==> Loading score segment {score_filename}")
     day_scores = np.load(score_filename)
     day_scores_offset_seconds = (at_hour * 60 + at_minute) * 60
-    segment_scores = day_scores[
-        day_scores_offset_seconds : day_scores_offset_seconds + psound_segment_seconds
-    ]
+    segment_scores = day_scores[day_scores_offset_seconds : day_scores_offset_seconds + psound_segment_seconds]
     print(f"     segment_scores ({len(segment_scores)}) = {segment_scores}")
 
     if at_hour == 0 and at_minute == 0 and hours == 24 and minutes == 0:
@@ -144,9 +142,7 @@ Examples:
     hwsd/plot_scores_day.py --year=2016 --month=11 --day=1 --at-hour=0 --at-minute=25 --hours=0 --minutes=30
     """
 
-    parser = ArgumentParser(
-        description=description, epilog=example, formatter_class=RawTextHelpFormatter
-    )
+    parser = ArgumentParser(description=description, epilog=example, formatter_class=RawTextHelpFormatter)
 
     parser.add_argument(
         "--audio-base-dir",
@@ -193,9 +189,7 @@ Examples:
         default=0,
         help="Additional number of minutes to plot. By default, 0",
     )
-    parser.add_argument(
-        "--show-plot", action="store_true", default=False, help="Also show the plot."
-    )
+    parser.add_argument("--show-plot", action="store_true", default=False, help="Also show the plot.")
 
     return parser.parse_args()
 
