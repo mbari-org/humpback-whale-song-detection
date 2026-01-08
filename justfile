@@ -16,7 +16,7 @@ setup:
     uv sync
 
 # A convenient recipe for development
-dev: format check test
+dev: format check test lint
 
 # Do static type checking with ty
 check:

@@ -32,8 +32,6 @@ Then set up the project:
 
     just setup
 
-That's it! No need to manually activate environments - `uv run` handles that automatically.
-
 ### Using GPU?
 
 Per https://www.tensorflow.org/install/pip:
@@ -107,12 +105,6 @@ A recent resampling exercise on gizo (Sept to Dec, 2021):
 
     nohup ./resample_year_months.sh 2022 $(seq 1 3) > logs/nohup_resample_2022_1_to_3.out &
 
-(ongoing) A more recent resampling exercise on gizo:
-
-    cd /opt/humpback/humpback-whale-song-detection
-    mkdir -p logs
-    nohup ./resample_year_months.sh 2023 $(seq 1 1) > logs/nohup_resample_2023_1_to_1.out &
-
 ## Applying the model
 
 Run `hwsd/apply_model.py` indicating the years, months, and days to process.
@@ -129,7 +121,7 @@ The code takes care of adjusting the day range depending on the calendar month.
 
 Example: To apply the model on the six months Oct–Dec'2020 and Jan–Mar'2021:
 
-    hwsd/apply_model.py "2020/10-12" "2021/1-3"
+    nohup uv run python3 -u hwsd/apply_model.py "2020/10-12" "2021/1-3"
 
 Some of our runs on gizo have been like the following:
 
@@ -202,12 +194,6 @@ run the following on a regular basis as you work with the code:
 
     just dev
 
-This task does code formatting, type checking, and testing. All tasks now use `uv run` automatically.
-
-**NOTE**: Before committing/pushing any changes, be sure to also run:
-
-    just lint
-
-and address any issues.
+This task does code formatting, type checking, testing, and linting.
 
 See [`justfile`](justfile) for all available tasks.
