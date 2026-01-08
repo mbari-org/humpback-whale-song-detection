@@ -24,8 +24,6 @@ def elapsed_end(started: float) -> str:
 def parse_days(*args: str) -> list[tuple[int, int, int]]:
     """See test_parse_days"""
 
-    # pylint: disable=too-many-locals,too-many-nested-blocks
-
     def interval_values(spec: str, limit: int) -> list[int]:
         limits = range(1, limit + 1)
         frags = [int(x) for x in spec.split("-")]
@@ -52,8 +50,6 @@ def parse_days(*args: str) -> list[tuple[int, int, int]]:
         else:
             print(f"ERROR: invalid syntax for parse_days: arg=`{arg}`")
             return res
-
-        # pylint: disable=invalid-name
 
         for yy in yyy.split(","):
             years = interval_values(yy, 9999)

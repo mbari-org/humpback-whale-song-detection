@@ -12,8 +12,6 @@ from matplotlib import gridspec
 from hwsd.file_helper import DEFAULT_AUDIO_BASE_DIR, DEFAULT_SCORE_BASE_DIR, FileHelper
 from hwsd.plotting import plot_scores, plot_spectrogram_scipy
 
-# pylint: disable=too-many-arguments
-
 
 def plot_results(
     scores: np.ndarray,
@@ -68,9 +66,6 @@ def plot_results(
         plt.show()
 
 
-# pylint: disable=too-many-arguments
-
-
 def plot_segment(
     file_helper: FileHelper,
     year: int,
@@ -83,9 +78,6 @@ def plot_segment(
     show_plot: bool = False,
 ):
     """Plots an audio segment."""
-
-    # pylint: disable=too-many-locals
-
     print("\n==> Selecting day")
     if not file_helper.select_day(year, month, day):
         return

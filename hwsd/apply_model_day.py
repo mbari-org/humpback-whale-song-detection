@@ -19,9 +19,6 @@ def get_chunk_label(tot_minutes: int) -> str:
     return f"{hours:02}h:{minutes:02}m"
 
 
-# pylint: disable=too-many-arguments
-
-
 def apply_model_day(
     file_helper: FileHelper,
     model_helper: ModelHelper,
@@ -37,9 +34,6 @@ def apply_model_day(
     Updates the score file corresponding to the complete year-month-day,
     of course while retaining any already stored scores outside the segment.
     """
-
-    # pylint: disable=too-many-locals
-
     if file_helper.sample_rate != 10_000:
         # A previous version handled this case by doing the resampling (using librosa).
         # but later on we opted to generate the 10kHz files beforehand (using sox).
