@@ -5,17 +5,11 @@ Model use utilities.
 import os
 
 import numpy as np
-import tensorflow as tf
-import tensorflow_hub as hub
 
 MODEL_URL = "https://tfhub.dev/google/humpback_whale/1"
 
 # Model saved locally here
 LOCAL_MODEL = "google/humpback_whale/1"
-
-# We apply the model to get a 1-sec score resolution
-# (Note that the model expects input signals sampled at 10 kHz.)
-CONTEXT_STEP_SAMPLES = tf.cast(10_000, tf.int64)
 
 
 class ModelHelper:
@@ -33,6 +27,8 @@ class ModelHelper:
         then from a local copy in subsequent calls.
         The model and score function are maintained internally.
         """
+        import tensorflow as tf
+        import tensorflow_hub as hub
 
         if os.path.isdir(LOCAL_MODEL):
             print(f"\n==> Loading model from {LOCAL_MODEL}")
@@ -65,10 +61,16 @@ class ModelHelper:
         :param psound:  The input signal, assumed sampled at 10 kHz.
         :return:        Array of corresponding scores at 1-sec resolution.
         """
+        import tensorflow as tf
+
+        assert self.score_fn is not None, "Model not loaded. Call load_model() first."
+
+        # We apply the model to get a 1-sec score resolution
+        # (Note that the model expects input signals sampled at 10 kHz.)
+        context_step_samples = tf.cast(10_000, tf.int64)
+
         waveform1 = np.expand_dims(psound, axis=1)
         waveform_exp = tf.expand_dims(waveform1, 0)  # makes a batch of size 1
 
-        psound_scores = self.score_fn(
-            waveform=waveform_exp, context_step_samples=CONTEXT_STEP_SAMPLES
-        )
+        psound_scores = self.score_fn(waveform=waveform_exp, context_step_samples=context_step_samples)
         return psound_scores["scores"].numpy()[0]

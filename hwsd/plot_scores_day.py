@@ -2,8 +2,8 @@
 """
 Module for plotting the results for a day.
 """
+
 from argparse import ArgumentParser, RawTextHelpFormatter
-from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -20,12 +20,12 @@ def plot_results(
     signal: np.ndarray,
     sample_rate: int,
     hydrophone_sensitivity: float,
-    title: Optional[str] = None,
+    title: str | None = None,
     scores_with_dots: bool = True,
     scores_with_steps: bool = False,
-    scores_med_filt_size: Optional[int] = None,
+    scores_med_filt_size: int | None = None,
     show_plot: bool = True,
-    out_image_filename: Optional[str] = None,
+    out_image_filename: str | None = None,
 ):
     """
     Creates a combined figure with spectrogram and score plots.
@@ -100,9 +100,7 @@ def plot_segment(
     print(f"\n==> Loading score segment {score_filename}")
     day_scores = np.load(score_filename)
     day_scores_offset_seconds = (at_hour * 60 + at_minute) * 60
-    segment_scores = day_scores[
-        day_scores_offset_seconds : day_scores_offset_seconds + psound_segment_seconds
-    ]
+    segment_scores = day_scores[day_scores_offset_seconds : day_scores_offset_seconds + psound_segment_seconds]
     print(f"     segment_scores ({len(segment_scores)}) = {segment_scores}")
 
     if at_hour == 0 and at_minute == 0 and hours == 24 and minutes == 0:
@@ -143,9 +141,7 @@ Examples:
     hwsd/plot_scores_day.py --year=2016 --month=11 --day=1 --at-hour=0 --at-minute=25 --hours=0 --minutes=30
     """
 
-    parser = ArgumentParser(
-        description=description, epilog=example, formatter_class=RawTextHelpFormatter
-    )
+    parser = ArgumentParser(description=description, epilog=example, formatter_class=RawTextHelpFormatter)
 
     parser.add_argument(
         "--audio-base-dir",
@@ -192,9 +188,7 @@ Examples:
         default=0,
         help="Additional number of minutes to plot. By default, 0",
     )
-    parser.add_argument(
-        "--show-plot", action="store_true", default=False, help="Also show the plot."
-    )
+    parser.add_argument("--show-plot", action="store_true", default=False, help="Also show the plot.")
 
     return parser.parse_args()
 

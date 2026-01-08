@@ -6,7 +6,6 @@ See USAGE.
 
 import sys
 import time
-from typing import List
 
 from hwsd.apply_model_day import apply_model_day
 from hwsd.file_helper import DEFAULT_SCORE_BASE_DIR, FileHelper
@@ -27,7 +26,7 @@ See README.md for more details.
 """
 
 
-def main(intervals: List[str]) -> None:
+def main(intervals: list[str]) -> None:
     """
     Applies the model on the given intervals.
     """

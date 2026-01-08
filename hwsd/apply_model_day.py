@@ -2,6 +2,7 @@
 """
 Core module for applying the model.
 """
+
 import time
 from argparse import ArgumentParser, RawTextHelpFormatter
 
@@ -81,9 +82,7 @@ def apply_model_day(
     chunk_minutes = 60 * at_hour
     for start in range(0, len(psound_segment), to_model_in_samples):
         chunk_label = get_chunk_label(chunk_minutes)
-        print(
-            f"\n==> Applying model on {model_minutes}-min chunk starting @ {chunk_label}  ({date_tag})"
-        )
+        print(f"\n==> Applying model on {model_minutes}-min chunk starting @ {chunk_label}  ({date_tag})")
         model_chunk_started = time.time()
         psound_chunk = psound_segment[start : start + to_model_in_samples]
         chunk_score_values = model_helper.apply_model(psound_chunk)
@@ -108,9 +107,7 @@ def apply_model_day(
         # advance chunk_minutes for next cycle:
         chunk_minutes += model_minutes
 
-    print(
-        f"\n>> model applied on complete {hours}-hour segment in {elapsed_end(model_application_started)}\n"
-    )
+    print(f"\n>> model applied on complete {hours}-hour segment in {elapsed_end(model_application_started)}\n")
 
     file_helper.save_day_scores(day_scores)
 
@@ -125,14 +122,12 @@ def parse_arguments():
 Examples:
     hwsd/apply_model_day.py --year=2016 --month=12 --day=21
        will process a complete day.
-                         
+
     hwsd/apply_model_day.py --year=2016 --month=12 --day=21 --at_hour=10 --hours=4
-       will only process the indicated segment within a day.    
+       will only process the indicated segment within a day.
     """
 
-    parser = ArgumentParser(
-        description=description, epilog=example, formatter_class=RawTextHelpFormatter
-    )
+    parser = ArgumentParser(description=description, epilog=example, formatter_class=RawTextHelpFormatter)
 
     parser.add_argument(
         "--audio-base-dir",
@@ -164,8 +159,7 @@ Examples:
         type=int,
         metavar="h",
         default=24,
-        help="Number of hours to process. "
-        "By default, the remaining hours for the day per `at-hour`.",
+        help="Number of hours to process. By default, the remaining hours for the day per `at-hour`.",
     )
     parser.add_argument(
         "--model-minutes",

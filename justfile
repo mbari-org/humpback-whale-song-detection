@@ -7,53 +7,33 @@
 _list:
     @just --list --unsorted
 
-# Create virtenv and install dependencies
-setup:
-    #!/usr/bin/env bash
-    python3 -m venv venv
-    source venv/bin/activate
-    python3 -m pip install -r requirements.txt
+# Install uv package manager
+install-uv:
+    curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# setup when python3-venv package is not available
-setup_no_python3-venv:
-    #!/usr/bin/env bash
-    python3 -m venv venv --without-pip
-    source venv/bin/activate
-    curl https://bootstrap.pypa.io/get-pip.py | python
-    python3 -m pip install -r requirements.txt
+# Create uv environment and install dependencies
+setup:
+    uv sync
 
 # A convenient recipe for development
 dev: format check test
 
-# Do static type checking (not very strict)
+# Do static type checking with ty
 check:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m mypy hwsd
-
-# Install std types for mypy
-install-types:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m mypy --install-types
+    uv run ty check hwsd
 
 # Run tests
 test:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m pytest --show-capture=all
+    uv run pytest --show-capture=all
 
-# Format source code
+# Format source code with ruff
 format:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m ufmt format hwsd
+    uv run ruff format hwsd
+    uv run ruff check --fix --unsafe-fixes hwsd
 
-# Run pylint
-pylint:
-    #!/usr/bin/env bash
-    source venv/bin/activate
-    python3 -m pylint hwsd
+# Run ruff linter
+lint:
+    uv run ruff check hwsd
 
 # Show latest few tags
 tags:
@@ -66,3 +46,4 @@ clean:
     rm -rf dist
     rm -rf build
     rm -rf .ruff_cache
+    rm -rf .venv
