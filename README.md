@@ -38,8 +38,8 @@ That's it! No need to manually activate environments - `uv run` handles that aut
 
 Per https://www.tensorflow.org/install/pip:
 
-    python3 -m pip install 'tensorflow[and-cuda]'
-    python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
+    uv pip install 'tensorflow[and-cuda]'
+    uv run python3 -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"
 
 > The output of the verification above may look like:
 > ```
