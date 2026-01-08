@@ -3,7 +3,7 @@ name = "humpback-whale-song-detection"
 version = "0.1.0"
 description = "Applying the NOAA/Google Humpback Whale Song Detector on Pacific Ocean Sound data"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dependencies = [
     "matplotlib",
     "scipy",
@@ -40,7 +40,9 @@ select = [
     "W",   # pycodestyle warnings
     "F",   # pyflakes
     "I",   # isort
-    "UP",  # pyupgrade
+    "UP",  # pyupgrade - modernize Python code (list/dict instead of List/Dict, etc.)
+    "B",   # flake8-bugbear - find likely bugs
+    "SIM", # flake8-simplify - simplify code
 ]
 
 [tool.pytest.ini_options]

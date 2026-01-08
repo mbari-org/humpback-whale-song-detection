@@ -29,7 +29,7 @@ test:
 # Format source code with ruff
 format:
     uv run ruff format hwsd
-    uv run ruff check --select I --fix hwsd
+    uv run ruff check --fix --unsafe-fixes hwsd
 
 # Run ruff linter
 lint:

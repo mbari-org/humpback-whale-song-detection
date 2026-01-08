@@ -4,7 +4,6 @@ Module for plotting the results for a day.
 """
 
 from argparse import ArgumentParser, RawTextHelpFormatter
-from typing import Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -21,12 +20,12 @@ def plot_results(
     signal: np.ndarray,
     sample_rate: int,
     hydrophone_sensitivity: float,
-    title: Optional[str] = None,
+    title: str | None = None,
     scores_with_dots: bool = True,
     scores_with_steps: bool = False,
-    scores_med_filt_size: Optional[int] = None,
+    scores_med_filt_size: int | None = None,
     show_plot: bool = True,
-    out_image_filename: Optional[str] = None,
+    out_image_filename: str | None = None,
 ):
     """
     Creates a combined figure with spectrogram and score plots.

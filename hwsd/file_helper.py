@@ -5,7 +5,6 @@ File handling utilities.
 import os
 import sys
 from math import ceil, floor
-from typing import Optional, Tuple
 
 import numpy as np
 import soundfile as sf
@@ -32,8 +31,8 @@ class FileHelper:
 
         self.audio_base_dir: str = audio_base_dir
         self.score_base_dir: str = score_base_dir
-        self.audio_filename: Optional[str] = None
-        self.score_filename: Optional[str] = None
+        self.audio_filename: str | None = None
+        self.score_filename: str | None = None
         self.year: int = 0
         self.month: int = 0
         self.day: int = 0
@@ -68,7 +67,7 @@ class FileHelper:
 
     def load_audio_segment(
         self, at_hour: int = 0, at_minute: int = 0, hours: int = 0, minutes: int = 0
-    ) -> Tuple[np.ndarray, int]:
+    ) -> tuple[np.ndarray, int]:
         """
         Loads a segment from the selected day starting at the given
         `at_hour` and `at_minute`, and with duration given by

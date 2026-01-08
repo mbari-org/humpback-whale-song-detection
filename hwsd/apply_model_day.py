@@ -122,9 +122,9 @@ def parse_arguments():
 Examples:
     hwsd/apply_model_day.py --year=2016 --month=12 --day=21
        will process a complete day.
-                         
+
     hwsd/apply_model_day.py --year=2016 --month=12 --day=21 --at_hour=10 --hours=4
-       will only process the indicated segment within a day.    
+       will only process the indicated segment within a day.
     """
 
     parser = ArgumentParser(description=description, epilog=example, formatter_class=RawTextHelpFormatter)

@@ -5,7 +5,6 @@ Some misc utilities.
 import math
 import time
 from calendar import monthrange
-from typing import List, Tuple
 
 
 def elapsed_end(started: float) -> str:
@@ -22,12 +21,12 @@ def elapsed_end(started: float) -> str:
     return f"{secs:.1f}s"
 
 
-def parse_days(*args: str) -> List[Tuple[int, int, int]]:
+def parse_days(*args: str) -> list[tuple[int, int, int]]:
     """See test_parse_days"""
 
     # pylint: disable=too-many-locals,too-many-nested-blocks
 
-    def interval_values(spec: str, limit: int) -> List[int]:
+    def interval_values(spec: str, limit: int) -> list[int]:
         limits = range(1, limit + 1)
         frags = [int(x) for x in spec.split("-")]
         if not 1 <= len(frags) <= 2:
@@ -39,7 +38,7 @@ def parse_days(*args: str) -> List[Tuple[int, int, int]]:
             return [x for x in nominal if x in limits]
         return frags
 
-    res: List[Tuple[int, int, int]] = []
+    res: list[tuple[int, int, int]] = []
 
     # for simplicity, we assume the delimited pieces are numbers.
 
