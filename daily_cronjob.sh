@@ -18,13 +18,15 @@ start_time=$SECONDS
 
 AUDIO_BASE_DIR_10kHz="/mnt/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
 
+LOG_FILE="/mnt/PAM_Analysis/GoogleHumpbackModel/daily_cronjob.log"
+
 # Get $year $month $day from previous day's date
 prev_date=$(date -d 'yesterday' '+%Y %m %d')
 read -r year month day <<< "$prev_date"
 
 # Redirect stdout to log file, keep stderr for cron email on errors
 mkdir -p logs
-exec 1>> "logs/daily_cronjob.log"
+exec 1>> "$LOG_FILE"
 
 # Remove leading zeros for proper formatting
 year=$(printf "%d" "$year")
