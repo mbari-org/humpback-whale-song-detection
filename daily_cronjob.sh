@@ -11,7 +11,7 @@
 set -ue
 
 # Change to the directory where this script is located (that is, under the repo clone)
-cd "$(dirname "${BASH_SOURCE[0]}")"
+cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")"
 
 # Capture start time
 start_time=$SECONDS
@@ -42,7 +42,7 @@ echo "Resampling audio file..."
 ./resample_sox.sh "$year" "$month" "$day" 2>&1
 
 # Apply the humpback whale song detection model
-echo "Applying humpback whale song detection model..."
+echo -e "\nApplying humpback whale song detection model..."
 uv run python3 -u hwsd/apply_model.py "$year/$month/$day" > "logs/nohup-$year-$month-$day.out" 2>&1
 
 # Remove the resampled 10kHz file
