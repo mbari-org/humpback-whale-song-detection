@@ -29,9 +29,9 @@ mkdir -p logs
 exec 1>> "$LOG_FILE"
 
 # Remove leading zeros for proper formatting
-year=$(printf "%d" "$year")
-month=$(printf "%d" "$month")
-day=$(printf "%d" "$day")
+year=$((10#$year))
+month=$((10#$month))
+day=$((10#$day))
 
 printf "=== [%s]: Processing: %04d-%02d-%02d\n" \
        "$(date '+%Y-%m-%d %H:%M:%S')" \
