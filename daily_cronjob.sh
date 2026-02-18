@@ -39,7 +39,7 @@ printf "=== [%s]: Processing: %04d-%02d-%02d\n" \
 
 # Resample the 16kHz audio file to 10kHz
 echo "Resampling audio file..."
-./resample_sox.sh "$year" "$month" "$day" 2>&1
+./resample_sox.sh "$year" "$month" "$day"
 
 # Apply the humpback whale song detection model
 echo -e "\nApplying humpback whale song detection model..."
