@@ -31,11 +31,12 @@ from hwsd.model_helper import ModelHelper
 TARGET_SAMPLE_RATE = 10_000
 
 
-def ensure_10khz(wav_path: Path) -> Path:
+def ensure_10khz(wav_path: Path, output_dir: Path | None = None) -> Path:
     """
     Returns a path to a 10 kHz version of `wav_path`, resampling via `sox`
-    if needed. The resampled file is written alongside the input as
-    `<stem>_10kHz.wav` and reused if already present.
+    if needed. The resampled file is written as `<stem>_10kHz.wav` in
+    `output_dir` (if given) or alongside the input, and reused if already
+    present.
     """
     info = sf.info(str(wav_path))
     if info.samplerate == TARGET_SAMPLE_RATE:
@@ -44,7 +45,12 @@ def ensure_10khz(wav_path: Path) -> Path:
     if shutil.which("sox") is None:
         raise RuntimeError("`sox` not found on PATH; required to resample to 10 kHz.")
 
-    out_path = wav_path.with_name(wav_path.stem + "_10kHz.wav")
+    resampled_name = wav_path.stem + "_10kHz.wav"
+    if output_dir is not None:
+        output_dir.mkdir(parents=True, exist_ok=True)
+        out_path = output_dir / resampled_name
+    else:
+        out_path = wav_path.with_name(resampled_name)
     if out_path.exists() and sf.info(str(out_path)).samplerate == TARGET_SAMPLE_RATE:
         print(f"==> Reusing existing 10 kHz file {out_path}")
         return out_path
@@ -59,9 +65,15 @@ def ensure_10khz(wav_path: Path) -> Path:
     return out_path
 
 
-def score_file(wav_path: str) -> None:
-    wav_path = Path(wav_path)
-    wav_path = ensure_10khz(wav_path)
+def score_file(
+    wav_path: str,
+    output_dir: str | None = None,
+    remove_resampled: bool = False,
+) -> None:
+    original_path = Path(wav_path)
+    out_dir = Path(output_dir) if output_dir is not None else None
+    wav_path = ensure_10khz(original_path, out_dir)
+    resampled = wav_path != original_path
 
     print(f"==> Loading {wav_path}")
     audio, sample_rate = sf.read(wav_path, dtype="float32")
@@ -82,18 +94,40 @@ def score_file(wav_path: str) -> None:
     print(f"    >> model applied in {elapsed_end(apply_started)}")
     print(f"    scores: {len(scores):,}")
 
-    out_path = wav_path.with_name(wav_path.stem + "_scores.npy")
+    score_name = wav_path.stem + "_scores.npy"
+    if out_dir is not None:
+        out_dir.mkdir(parents=True, exist_ok=True)
+        out_path = out_dir / score_name
+    else:
+        out_path = wav_path.with_name(score_name)
     np.save(out_path, scores)
     print(f"==> Scores saved to {out_path}")
+
+    if resampled and remove_resampled:
+        print(f"==> Removing resampled file {wav_path}")
+        wav_path.unlink()
 
 
 def parse_arguments():
     description = "Applies Google Humpback Whale Model on a WAV file (resampling to 10 kHz via sox if needed)."
     parser = ArgumentParser(description=description, formatter_class=RawTextHelpFormatter)
     parser.add_argument("wav_file", type=str, help="Path to the input WAV file.")
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default=None,
+        metavar="dir",
+        help="Directory in which to save the score file. Defaults to alongside the WAV.",
+    )
+    parser.add_argument(
+        "--remove-resampled",
+        action="store_true",
+        default=False,
+        help="If the input was resampled to 10 kHz, delete the resampled WAV after scoring.",
+    )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     opts = parse_arguments()
-    score_file(opts.wav_file)
+    score_file(opts.wav_file, opts.output_dir, opts.remove_resampled)
