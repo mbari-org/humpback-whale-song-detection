@@ -69,6 +69,7 @@ def score_file(
     wav_path: str,
     output_dir: str | None = None,
     remove_resampled: bool = False,
+    model_minutes: int = 10,
 ) -> None:
     original_path = Path(wav_path)
     out_dir = Path(output_dir) if output_dir is not None else None
@@ -88,9 +89,23 @@ def score_file(
     model_helper.load_model()
     print(f"    >> model loaded in {elapsed_end(model_load_started)}")
 
-    print("==> Applying model ...")
+    chunk_seconds = 60 * model_minutes
+    chunk_samples = sample_rate * chunk_seconds
+    print(f"==> Applying model in {model_minutes}-min chunks ...")
     apply_started = time.time()
-    scores = model_helper.apply_model(audio)
+    chunks: list[np.ndarray] = []
+    for start in range(0, len(audio), chunk_samples):
+        chunk = audio[start : start + chunk_samples]
+        chunk_seconds_actual = len(chunk) // sample_rate
+        chunk_label = f"{start // sample_rate}s..{start // sample_rate + chunk_seconds_actual}s"
+        print(f"    chunk {chunk_label} ({len(chunk):,} samples)")
+        chunk_started = time.time()
+        chunk_scores = model_helper.apply_model(chunk)
+        print(f"      >> {len(chunk_scores):,} scores in {elapsed_end(chunk_started)}")
+        if len(chunk_scores) > chunk_seconds_actual:
+            chunk_scores = chunk_scores[:chunk_seconds_actual]
+        chunks.append(chunk_scores)
+    scores = np.concatenate(chunks) if chunks else np.array([], dtype=np.float32)
     print(f"    >> model applied in {elapsed_end(apply_started)}")
     print(f"    scores: {len(scores):,}")
 
@@ -125,9 +140,16 @@ def parse_arguments():
         default=False,
         help="If the input was resampled to 10 kHz, delete the resampled WAV after scoring.",
     )
+    parser.add_argument(
+        "--model-minutes",
+        type=int,
+        default=10,
+        metavar="m",
+        help="Length in minutes of audio to give the model at a time. Lower this on small GPUs to avoid OOM. Default: 10.",
+    )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     opts = parse_arguments()
-    score_file(opts.wav_file, opts.output_dir, opts.remove_resampled)
+    score_file(opts.wav_file, opts.output_dir, opts.remove_resampled, opts.model_minutes)
