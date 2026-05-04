@@ -20,12 +20,14 @@ AUDIO_BASE_DIR_10kHz="/mnt/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
 
 LOG_FILE="/mnt/PAM_Analysis/GoogleHumpbackModel/daily_cronjob.log"
 
+APPLY_MODEL_LOGS="/mnt/PAM_Analysis/GoogleHumpbackModel/apply_model_logs"
+mkdir -p "$APPLY_MODEL_LOGS"
+
 # Get $year $month $day from previous day's date
 prev_date=$(date -d 'yesterday' '+%Y %m %d')
 read -r year month day <<< "$prev_date"
 
 # Redirect stdout to log file, keep stderr for cron email on errors
-mkdir -p logs
 exec 1>> "$LOG_FILE"
 
 # Remove leading zeros for proper formatting
@@ -43,7 +45,8 @@ echo "Resampling audio file..."
 
 # Apply the humpback whale song detection model
 echo -e "\nApplying humpback whale song detection model..."
-uv run python3 -u hwsd/apply_model.py "$year/$month/$day" > "logs/nohup-$year-$month-$day.out" 2>&1
+uv run python3 -u hwsd/apply_model.py "$year/$month/$day" \
+    > "$APPLY_MODEL_LOGS/$year-$month-$day.out" 2>&1
 
 # Remove the resampled 10kHz file
 echo "Cleaning up resampled file..."
