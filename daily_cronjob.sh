@@ -7,13 +7,15 @@
 # - Resample previous day's 16kHz audio file to 10kHz
 # - Apply Google/NOAA humpback whale song detection model
 # - Clean up the resampled 10kHz file
+#
+# As a convenience, the script can be run directly with an optional
+# YYYY-MM-DD argument to process the given date.
 
 set -ue
 
 # Change to the directory where this script is located (that is, under the repo clone)
 cd -P -- "$(dirname -- "${BASH_SOURCE[0]}")"
 
-# Capture start time
 start_time=$SECONDS
 
 AUDIO_BASE_DIR_10kHz="/mnt/PAM_Analysis/GoogleHumpbackModel/decimated_10kHz"
@@ -23,9 +25,17 @@ LOG_FILE="/mnt/PAM_Analysis/GoogleHumpbackModel/daily_cronjob.log"
 APPLY_MODEL_LOGS="/mnt/PAM_Analysis/GoogleHumpbackModel/apply_model_logs"
 mkdir -p "$APPLY_MODEL_LOGS"
 
-# Get $year $month $day from previous day's date
-prev_date=$(date -d 'yesterday' '+%Y %m %d')
-read -r year month day <<< "$prev_date"
+# Get $year $month $day from optional YYYY-MM-DD argument, or previous day's date
+if [[ $# -ge 1 ]]; then
+  if [[ ! "$1" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+    echo "Usage: $0 [YYYY-MM-DD]" >&2
+    exit 1
+  fi
+  IFS='-' read -r year month day <<< "$1"
+else
+  prev_date=$(date -d 'yesterday' '+%Y %m %d')
+  read -r year month day <<< "$prev_date"
+fi
 
 # Redirect stdout to log file, keep stderr for cron email on errors
 exec 1>> "$LOG_FILE"
@@ -43,13 +53,15 @@ printf "=== [%s]: Processing: %04d-%02d-%02d\n" \
 echo "Resampling audio file..."
 ./resample_sox.sh "$year" "$month" "$day" 2> >(grep -v '^sox WARN' >&2)
 
+apply_model_log_file=$(printf "%s/%04d-%02d-%02d.log" "$APPLY_MODEL_LOGS" "$year" "$month" "$day")
+
 # Apply the humpback whale song detection model
 echo -e "\nApplying humpback whale song detection model..."
-uv run python3 -u hwsd/apply_model.py "$year/$month/$day" \
-    > "$APPLY_MODEL_LOGS/$year-$month-$day.out" 2>&1
+echo -e "(Log file: $apply_model_log_file)"
+uv run python3 -u hwsd/apply_model.py "$year/$month/$day" > "$apply_model_log_file" 2>&1
 
 # Remove the resampled 10kHz file
-echo "Cleaning up resampled file..."
+echo -e "\nCleaning up resampled file..."
 decimated_file=$(printf "%s/%04d/%02d/MARS-%04d%02d%02dT000000Z-10kHz.wav" \
      "$AUDIO_BASE_DIR_10kHz" "$year" "$month" "$year" "$month" "$day")
 if [[ -f "$decimated_file" ]]; then
